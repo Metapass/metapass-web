@@ -1,7 +1,8 @@
 import type { AppProps } from 'next/app'
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import { mode } from "@chakra-ui/theme-tools";
-
+import "@fontsource/inter"
+import Layout from '../components/Layout'
 
 const theme = extendTheme({
     fonts: {
@@ -26,7 +27,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     return (
         <ChakraProvider theme={theme}>
+        <Layout>
    			<Component {...pageProps} />
+        </Layout>
     	</ChakraProvider>
     )
 }
