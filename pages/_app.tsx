@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import { mode } from "@chakra-ui/theme-tools";
 import "@fontsource/inter"
 import Layout from '../components/Layout'
+import Wallet from '../utils/walletContext'
 
 const theme = extendTheme({
     fonts: {
@@ -27,9 +28,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     return (
         <ChakraProvider theme={theme}>
-        <Layout>
-   			<Component {...pageProps} />
-        </Layout>
+            <Wallet>
+                <Layout>
+           		    <Component {...pageProps} />
+                </Layout>
+            </Wallet>
     	</ChakraProvider>
     )
 }

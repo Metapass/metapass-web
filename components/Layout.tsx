@@ -2,6 +2,8 @@ import type { NextPage } from 'next'
 import { useState, useEffect, useContext } from 'react'
 import Header from './Header'
 import Web3 from 'web3'
+import { walletContext } from '../utils/walletContext'
+
 
 const Layout = ({ children }: any) => {
 
@@ -9,9 +11,11 @@ const Layout = ({ children }: any) => {
     const [address, setAddress] = useState(null);
     const [balance, setBalance] = useState(null);
 
+    const [wallet, setWallet] = useContext(walletContext)
+
     let windowType: any;
 
-    let endpoint: any = 'https://polygon-mumbai.g.alchemy.com/v2/OakS6vDx0Vps1b2No88N3mDKXF0a2E35'
+    let endpoint: any = process.env.NEXT_PUBLIC_ENDPOINT;
 
     let web3 = new Web3(endpoint);
 
@@ -24,6 +28,12 @@ const Layout = ({ children }: any) => {
         let bal = await web3.eth.getBalance(accounts[0]);
         let ethBal: any = await web3.utils.fromWei(bal, "ether");
         setBalance(ethBal);
+
+        setWallet({
+            balance: ethBal,
+            address: accounts[0],
+            web3: web3
+        })
     }
 
     function handleDisconnectClick() {
@@ -34,7 +44,7 @@ const Layout = ({ children }: any) => {
 
     return (
         <div>
-		<Header bal={balance} address={address} load={loadAccounts} handleDisconnectClick={handleDisconnectClick} ></Header>
+		<Header bal={balance} address={address} handleWalletConnect={loadAccounts} />
 		{children}
 		</div>
     )

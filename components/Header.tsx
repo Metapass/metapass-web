@@ -2,7 +2,7 @@ import { Flex, Box, Heading, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { DarkGlowingButton, GlowingButton } from './GlowingButton';
 
-function Header({ bal, address, load, handleDisconnectClick }: any) {
+function Header({ bal, address, handleWalletConnect }: any) {
     let addressDisplay;
     if (address) {
         let addArr = address.split("");
@@ -28,24 +28,17 @@ function Header({ bal, address, load, handleDisconnectClick }: any) {
           <Flex>
             {bal && address ? (
               <>
-                <Box
-                  backgroundColor={"whiteAlpha.700"}
-                  p={2}
-                  marginRight={1}
-                  rounded={"md"}
-                  m={2}
-                >
+                <Button  variant="outline" p={4} rounded={"md"} m={2}>
                   {" "}
                   {parseFloat(bal).toFixed(4)}
-                </Box>
-                <Box backgroundColor={"whiteAlpha.700"} p={2} m={2} rounded={"md"}>
+                </Button>
+                <Button variant="outline" p={4} m={2} rounded={"md"}>
                   {" "}
                   {addressDisplay}
-                </Box>
-                 <DarkGlowingButton m={2} p={1} label={"Disconnect"} onClick={handleDisconnectClick} />
+                </Button>
               </>
             ) : (
-            <GlowingButton label={"Connect Wallet"} m={2} p={1} onClick={load} />
+            <Button p={4} color="white" variant="outline" colorScheme="facebook" onClick={handleWalletConnect}  >Connect Wallet</Button>
             )}
           </Flex>
     </Flex>
