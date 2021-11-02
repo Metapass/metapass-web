@@ -71,8 +71,8 @@ function ID() {
                 "occupiedSeats": event.occupiedSeats + 1
             }).then(r => console.log('updated backend'))
 
-            toast("NFT Sent to your wallet! ✨");
-            
+            toast.success("NFT Sent to your wallet! ✨");
+
             } else {
                 console.log("connect wallet pls bro")
             }
