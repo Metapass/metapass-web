@@ -20,7 +20,9 @@ function ID() {
 
     const { id } = router.query;
 
-    useEffect( async() => {
+    useEffect(() => {
+
+     const fetchData = async () => {
 
         if(id) {
             let docRef = doc(db, "events", id);
@@ -35,6 +37,10 @@ function ID() {
                 console.log('id not yet initialized')
         }
         
+    }
+
+    fetchData();
+
     }, [id]);
 
         const mintTicket = async () => {
@@ -60,7 +66,7 @@ function ID() {
                 }
             }
 
-            let txn = await metapass.getTix(event.eventOwner, JSON.stringify(metadata) , { value: ethers.utils.parseEther('0.01') })
+            let txn = await metapass.getTix(event.eventOwner, JSON.stringify(metadata) , { value: ethers.utils.parseEther(`${event.fee}`) })
 
             await txn.wait();
             
