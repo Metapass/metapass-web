@@ -5,6 +5,8 @@ import "@fontsource/inter"
 import Layout from '../components/Layout'
 import Wallet from '../utils/walletContext'
 
+import 'react-toastify/dist/ReactToastify.min.css';
+import {ToastContainer} from 'react-toastify';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -13,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ChakraProvider theme={theme}>
             <Wallet>
                 <Layout>
+                    <ToastContainer />
            		    <Component {...pageProps} />
                 </Layout>
             </Wallet>

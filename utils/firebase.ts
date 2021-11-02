@@ -1,5 +1,5 @@
 import * as firebase from "firebase/app";
-import {doc, addDoc, collection, getFirestore, arrayUnion} from "firebase/firestore";
+import {doc, addDoc, collection, getFirestore, arrayUnion, getDoc, updateDoc} from "firebase/firestore";
 
 const firebaseConfig = {
 	apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -17,4 +17,4 @@ const firebaseConfig = {
 const db = getFirestore();
 
 
-export {firebase, doc, addDoc, collection, db, arrayUnion}
+export {firebase, doc, addDoc, collection, db, arrayUnion, getDoc, updateDoc}
