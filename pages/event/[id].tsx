@@ -9,24 +9,24 @@ import abi from '../../utils/Metapass.json';
 
 import { toast } from 'react-toastify';
 
+declare const window: any
 
 function ID() {
 
     const [wallet] = useContext(walletContext);
     
-    const [event, setEvent] = useState(null);
+    const [event, setEvent]: any = useState(null);
 
     const router = useRouter();
 
-    const { id } = router.query;
+    const { id }  = router.query;
 
     useEffect(() => {
 
      const fetchData = async () => {
-
         if(id) {
-            let docRef = doc(db, "events", id);
-            let docSnap = await getDoc(docRef)
+            let docRef: any = doc(db, "events", id.toString());
+            let docSnap: any = await getDoc(docRef)
 
             if(docSnap.exists()) {
                 setEvent(docSnap.data());
@@ -72,10 +72,14 @@ function ID() {
             
             console.log("Txn completed!")
 
-            let docRef = doc(db, "events", id);
-            updateDoc(docRef, {
-                "occupiedSeats": event.occupiedSeats + 1
-            }).then(r => console.log('updated backend'))
+            if(id) {
+                let docRef: any = doc(db, "events", id.toString());
+                updateDoc(docRef, {
+                    "occupiedSeats": event.occupiedSeats + 1
+                }).then(r => console.log('updated backend'));
+            } else {
+                console.log("no id found")
+            }
 
             toast.success("NFT Sent to your wallet! ✨");
 

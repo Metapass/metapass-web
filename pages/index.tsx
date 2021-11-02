@@ -3,8 +3,6 @@ import Head from 'next/head'
 import { Text, Box, Flex, Button } from "@chakra-ui/react"
 
 
-declare const window: any
-
 const Home: NextPage = () => {
 
     return (
