@@ -27,7 +27,6 @@ const Create = () => {
 	}
 
     const uploadToFirebase = async (e: any) => {
-        e.preventDefault();
 		if(!wallet.address) {
 			console.log('login pls')
 		} else {
@@ -59,9 +58,21 @@ const Create = () => {
 					<Text>
 						you've successfully created an event! Share this link for booking
 						{' '}
-						<Code onClick={onCopy} children={`https://metapass.vercel.app/event/${docId}`} />
+						<Code onClick={onCopy}>
+						{`https://metapass.vercel.app/event/${docId}`}
+						</Code>
 					</Text>
-					</>) :  (<CreateForm setTitle={setTitle} setDescription={setDescription} isPaid={isPaid} setFee={setFee} uploadToFirebase={uploadToFirebase} setIsPaid={setIsPaid} setSeats={setSeats} />)
+					</>) :  (
+					<CreateForm 
+					setTitle={setTitle} 
+					setDescription={setDescription} 
+					isPaid={isPaid} 
+					setFee={setFee} 
+					uploadToFirebase={uploadToFirebase} 
+					setIsPaid={setIsPaid} 
+					setSeats={setSeats} 
+					> </CreateForm>
+					)
 				}
 			</Flex>
 		</Box>
