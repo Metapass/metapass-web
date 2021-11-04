@@ -1,6 +1,5 @@
-import { Flex, Box, Heading, Button } from "@chakra-ui/react";
+import { Flex, Heading, Button, Box } from "@chakra-ui/react";
 import Link from "next/link";
-import { DarkGlowingButton, GlowingButton } from './GlowingButton';
 
 function Header({ bal, address, handleWalletConnect }: any) {
     let addressDisplay;
@@ -28,6 +27,17 @@ function Header({ bal, address, handleWalletConnect }: any) {
           <Flex>
             {bal && address ? (
               <>
+                  <Box m={2} p={2}>
+                    <Link href="/create">Create event</Link>    
+                  </Box>
+
+                  <Box m={2} p={2}>
+                  <Link href="/withdraw" >Withdraw funds</Link>    
+                  </Box>
+
+                  <Box m={2} p={2}>
+                  <Link href="#">How it works?</Link>    
+                  </Box>
                 <Button  variant="outline" p={4} rounded={"md"} m={2}>
                   {" "}
                   {parseFloat(bal).toFixed(4)}
