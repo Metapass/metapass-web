@@ -12,7 +12,7 @@ function Widthdraw() {
     const [wallet] = useContext(walletContext);
     const [balance, setBalance]: any = useState(null);
     
-    let metapass;
+    let metapass: any;
     
     if(typeof window !== "undefined") {
         const contractAddress = '0xD026d2732EFA940080e178ef75557b19df2E47EA';

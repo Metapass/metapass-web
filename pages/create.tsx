@@ -57,8 +57,7 @@ const Create = () => {
 				{
 					created ? (<>
 					<Text>
-						you've successfully created an event! 
-						Share this link for booking
+						you've successfully created an event! Share this link for booking
 						{' '}
 						<Code onClick={onCopy} children={`https://metapass.vercel.app/event/${docId}`} />
 					</Text>
