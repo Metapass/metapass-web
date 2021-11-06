@@ -3,6 +3,7 @@ import {useRouter} from 'next/router';
 import {doc, getDoc, db, updateDoc} from '../../utils/firebase';
 import {useEffect, useState, useContext} from 'react';
 import {walletContext} from '../../utils/walletContext';
+import Head from 'next/head';
 
 import { ethers } from 'ethers';
 import abi from '../../utils/Metapass.json';
@@ -60,28 +61,33 @@ function ID() {
             let metadata = {
                 "name": event.title,
                 "description": `NFT Ticket for ${event.title}`,
-                "image": "https://i.imgur.com/QCns31F.jpeg",
+                "image": event.image,
                 "properties": {
                     "Ticket Number": parseInt(event.occupiedSeats) + 1 
                 }
             }
 
-            let txn = await metapass.getTix(event.eventOwner, JSON.stringify(metadata) , { value: ethers.utils.parseEther(`${event.fee}`) })
+            try{
+                let txn = await metapass.getTix(event.eventOwner, JSON.stringify(metadata) , { value: ethers.utils.parseEther(`${event.fee}`) })
 
-            await txn.wait();
-            
-            console.log("Txn completed!")
-
-            if(id) {
-                let docRef: any = doc(db, "events", id.toString());
-                updateDoc(docRef, {
-                    "occupiedSeats": event.occupiedSeats + 1
-                }).then(r => console.log('updated backend'));
-            } else {
-                console.log("no id found")
+                await txn.wait();
+                
+                console.log("Txn completed!")
+    
+                if(id) {
+                    let docRef: any = doc(db, "events", id.toString());
+                    updateDoc(docRef, {
+                        "occupiedSeats": event.occupiedSeats + 1
+                    }).then(r => console.log('updated backend'));
+                } else {
+                    console.log("no id found")
+                }
+    
+                toast.success("NFT Sent to your wallet! ✨");
+            } catch(e) {
+                console.log(e)
             }
 
-            toast.success("NFT Sent to your wallet! ✨");
 
             } else {
                 console.log("connect wallet pls bro")
@@ -91,6 +97,7 @@ function ID() {
 
     return (
         <Box p={4}>
+            <Head><title>{event.title} // metapass</title></Head>
             <Flex direction="column" justifyContent={"center"} alignItems={"center"} >
             {
                 event ? (

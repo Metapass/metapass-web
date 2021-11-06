@@ -4,6 +4,7 @@ import {useState, useContext, useEffect} from 'react';
 import {toast} from 'react-toastify';
 import {ethers} from 'ethers';
 import abi from '../utils/Metapass.json';
+import Head from 'next/head'
 
 declare const window: any
 
@@ -38,9 +39,7 @@ function Widthdraw() {
     }
 
     useEffect(() => {
-
         getClaims()
-
     }, [wallet.address]);
 
     const withdrawFunds = async () => {
@@ -54,6 +53,7 @@ function Widthdraw() {
 
     return (
         <Box p={4}>
+            <Head><title>withdrawal // metapass</title></Head>
             <Flex justifyContent="center" alignItems="center" direction="column">
             {
                 balance ? (
