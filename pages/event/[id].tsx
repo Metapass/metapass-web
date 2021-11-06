@@ -97,7 +97,7 @@ function ID() {
 
     return (
         <Box p={4}>
-            <Head><title>{event.title} // metapass</title></Head>
+            <Head><title>{event.title + " // metapass"}</title></Head>
             <Flex direction="column" justifyContent={"center"} alignItems={"center"} >
             {
                 event ? (
