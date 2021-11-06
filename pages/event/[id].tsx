@@ -97,11 +97,11 @@ function ID() {
 
     return (
         <Box p={4}>
-            <Head><title>{event.title + " // metapass"}</title></Head>
             <Flex direction="column" justifyContent={"center"} alignItems={"center"} >
             {
                 event ? (
                     <>
+                    <Head><title>{event.title + " // metapass"}</title></Head>
                     <Heading m={2}>{event.title}</Heading>
                     <Text m={1}>total seats: {event.seats}</Text>
                     <Text m={1}>total remaining: {parseInt(event.seats) - parseInt(event.occupiedSeats)}</Text>
