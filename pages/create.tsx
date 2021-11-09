@@ -55,7 +55,7 @@ const Create = () => {
     const uploadToFirebase = async (e: any) => {
         if (!wallet.address) {
             console.log('login pls')
-        } else {
+        } else if (title && description && file) {
             try {
                 let docRef = await addDoc(collection(db, 'events'), {
                     title: title,
@@ -72,6 +72,8 @@ const Create = () => {
             } catch (e) {
                 console.log(e)
             }
+        } else {
+            toast('Make sure all fields are filled')
         }
     }
 

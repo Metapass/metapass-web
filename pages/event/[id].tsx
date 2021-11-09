@@ -16,6 +16,7 @@ function ID() {
     const [wallet] = useContext(walletContext)
 
     const [event, setEvent]: any = useState(null)
+    const [mintable, setMintable]: any = useState(false)
 
     const router = useRouter()
 
@@ -29,6 +30,11 @@ function ID() {
 
                 if (docSnap.exists()) {
                     setEvent(docSnap.data())
+                    if (docSnap.data().seats <= docSnap.data().occupiedSeats) {
+                        setMintable(false)
+                    } else {
+                        setMintable(true)
+                    }
                 } else {
                     console.log("doc data don't exist")
                 }
@@ -115,8 +121,9 @@ function ID() {
                             m={2}
                             variant="outline"
                             onClick={mintTicket}
+                            isDisabled={!mintable}
                         >
-                            get ticket
+                            {mintable ? 'get ticket' : 'sold out!'}
                         </Button>
                     </>
                 ) : (
