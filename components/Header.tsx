@@ -48,7 +48,7 @@ function Header({ bal, address, handleWalletConnect }: any) {
                 </Button>
               </>
             ) : (
-            <Button p={4} color="white" variant="outline" colorScheme="facebook" onClick={handleWalletConnect}  >Connect Wallet</Button>
+            <Button m={3} p={4} color="white" variant="outline" colorScheme="facebook" onClick={handleWalletConnect}  >Connect Wallet</Button>
             )}
           </Flex>
     </Flex>

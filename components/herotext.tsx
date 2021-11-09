@@ -6,9 +6,11 @@ const HeroText = () => {
     return (
         <Heading
          flex="1"
-         ml="2rem"
+         ml="4rem"
          mt="-5rem"
-         fontSize="2.5rem"
+         fontSize="96px"
+         lineHeight="88px"
+
          alignSelf="center"
             className="hero-text"
             fontFamily="Azonix"
@@ -23,7 +25,7 @@ const HeroText = () => {
         font-family: 'Azonix';
     }
     `}</style>  
-    REIMAGINING EVENTS
+    REIMAGINING EVENTS.
         </Heading>
     )
 }
