@@ -18,7 +18,9 @@ const theme = extendTheme({
     global: (props: any) => ({
       body: {
         color: mode("gray.800", "whiteAlpha.900")(props),
-        bg: mode("gray.100", "#141214")(props),
+        backgroundImage:`url('https://res.cloudinary.com/dev-connect/image/upload/v1636453687/svgs/Web_UI_aazfro.svg')`
+        //bg: mode("gray.50", "rgba(56, 14, 37, 1)")(props),
+        //bgGradient:mode("gray.100","linear(to-br,rgba(255, 255, 255, 0.4),rgba(255, 255, 255, 0.1),rgba(47, 104, 249, 1),rgba(144, 39, 234, 1))")(props),
       },
     }),
   },

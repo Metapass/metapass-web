@@ -1,4 +1,5 @@
-import { Flex, Heading, Button, Box } from "@chakra-ui/react";
+import { Flex, Heading, Button, Box,Image
+ } from "@chakra-ui/react";
 import Link from "next/link";
 
 function Header({ bal, address, handleWalletConnect }: any) {
@@ -19,10 +20,9 @@ function Header({ bal, address, handleWalletConnect }: any) {
 
     return (
         <Flex rounded="md" direction="row" p={2} justifyContent="space-between">
-          <Flex maxWidth={"md"}>
-            <Heading fontSize={"xl"} p={2}>
-              <Link href="/">MetaPass</Link>
-            </Heading>
+          <Flex ml="2rem" mt="1rem" maxWidth={"md"}>
+            <Image position="absolute"  zIndex="overlay"
+             src="https://res.cloudinary.com/dev-connect/image/upload/v1636452465/svgs/Group_1Logo_1_1_fbbkez.svg" alt="logo"/>
           </Flex>
           <Flex>
             {bal && address ? (
