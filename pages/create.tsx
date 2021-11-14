@@ -5,13 +5,7 @@ import { walletContext } from '../utils/walletContext'
 import Head from 'next/head'
 import CreateForm from '../components/CreateForm'
 import { toast } from 'react-toastify'
-import { create, urlSource } from 'ipfs-http-client'
-
-const ipfs = create({
-    host: 'ipfs.infura.io',
-    port: 5001,
-    protocol: 'https',
-})
+import axios from 'axios'
 
 const Create = () => {
     const [wallet] = useContext(walletContext)
@@ -22,6 +16,7 @@ const Create = () => {
     const [fee, setFee]: any = useState(0)
     const [seats, setSeats]: any = useState(0)
     const [file, setFile]: any = useState(undefined)
+    const [date, setDate]: any = useState(undefined)
     const [cid, setCid]: any = useState('')
 
     const [created, setCreated] = useState(false)
@@ -32,31 +27,30 @@ const Create = () => {
         `https://metapass.vercel.app/event/${docId}`
     )
 
-    useEffect(() => {
-        if (file !== undefined) {
-            let reader = new FileReader()
-            reader.readAsArrayBuffer(file)
-            reader.onloadend = async (e) => {
-                let res: ArrayBuffer = reader.result as ArrayBuffer
-                let b = new Buffer(res)
-                const { cid } = await ipfs.add(b)
-                console.log(cid.toString())
-                setCid(cid.toString())
-            }
-        } else {
-            console.log('file is undefined')
-        }
-    }, [file])
-
     if (hasCopied) {
         toast('copied the link!')
+    }
+
+    const uploadToCloudinary = async () => {
+        const formData = new FormData()
+
+        formData.append('file', file)
+        formData.append('upload_preset', 'public')
+
+        let post = await axios.post(
+            'https://api.cloudinary.com/v1_1/metapass/image/upload',
+            formData
+        )
+        return post.data.secure_url
     }
 
     const uploadToFirebase = async (e: any) => {
         if (!wallet.address) {
             console.log('login pls')
+            toast('Connect Wallet')
         } else if (title && description && file) {
             try {
+                let imageUrl = await uploadToCloudinary()
                 let docRef = await addDoc(collection(db, 'events'), {
                     title: title,
                     description: description,
@@ -65,7 +59,8 @@ const Create = () => {
                     eventOwner: wallet.address,
                     seats: seats,
                     occupiedSeats: 0,
-                    image: `https://ipfs.io/ipfs/${cid}`,
+                    image: imageUrl,
+                    date: date,
                 })
                 setDocId(docRef.id)
                 setCreated(true)
@@ -107,6 +102,7 @@ const Create = () => {
                         uploadToFirebase={uploadToFirebase}
                         setIsPaid={setIsPaid}
                         setSeats={setSeats}
+                        setDate={setDate}
                     >
                         {' '}
                     </CreateForm>

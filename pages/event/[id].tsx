@@ -4,6 +4,8 @@ import { doc, getDoc, db, updateDoc } from '../../utils/firebase'
 import { useEffect, useState, useContext } from 'react'
 import { walletContext } from '../../utils/walletContext'
 import Head from 'next/head'
+import { useTicket } from '../../utils/useTicket'
+import moment from 'moment'
 
 import { ethers } from 'ethers'
 import abi from '../../utils/Metapass.json'
@@ -115,6 +117,9 @@ function ID() {
                             {parseInt(event.seats) -
                                 parseInt(event.occupiedSeats)}
                         </Text>
+                        <Text m={2}>
+                            <DateComponent date={event.date} />
+                        </Text>
                         <Text m={2}>{event.description}</Text>
                         <Button
                             p={4}
@@ -131,6 +136,32 @@ function ID() {
                 )}
             </Flex>
         </Box>
+    )
+}
+
+function DateComponent({ date }) {
+    const monthArray = [
+        'Jan',
+        'Feb',
+        'March',
+        'April',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sept',
+        'Oct',
+        'Nov',
+        'Dec',
+    ]
+    const parsedDate = moment(date)
+    console.log(parsedDate.day())
+
+    return (
+        <>
+            {parsedDate.day()}-{monthArray[parsedDate.month()]}-
+            {parsedDate.year()}
+        </>
     )
 }
 

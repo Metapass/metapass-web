@@ -8,7 +8,9 @@ import {
     InputRightAddon,
     Button,
 } from '@chakra-ui/react'
+
 import Link from 'next/link'
+import moment from 'moment'
 
 function CreateForm({
     setTitle,
@@ -19,6 +21,7 @@ function CreateForm({
     setIsPaid,
     setSeats,
     setFile,
+    setDate,
 }: any) {
     return (
         <>
@@ -71,6 +74,13 @@ function CreateForm({
                     <InputRightAddon>MATIC</InputRightAddon>
                 </InputGroup>
             ) : null}
+            <hr />
+            <Input
+                type="datetime-local"
+                onChange={({ target }) => {
+                    setDate(new Date(target.value))
+                }}
+            />
             <Button m={2} variant="outline" p={4} onClick={uploadToFirebase}>
                 Create Event
             </Button>
