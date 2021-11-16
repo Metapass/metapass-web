@@ -6,7 +6,7 @@ const HeroTicket = () => {
     <Image
     height="80vh"
     mr="5rem"
-    src="https://res.cloudinary.com/dev-connect/image/upload/v1636455476/svgs/ticket_oqrcln.svg"
+    src="https://res.cloudinary.com/dev-connect/image/upload/v1637080046/img/hero_tick_ggsylf.png"
     alt="ticket"
     />
    )
