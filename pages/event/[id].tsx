@@ -19,6 +19,7 @@ function ID() {
 
     const [event, setEvent]: any = useState(null)
     const [mintable, setMintable]: any = useState(false)
+    const [inTxn, setInTxn]: any = useState(false);
 
     const router = useRouter()
 
@@ -53,17 +54,21 @@ function ID() {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
+
         if (wallet.address) {
+            setInTxn(true);
             const metapass = new ethers.Contract(
                 contractAddress,
                 abi.abi,
                 signer
             )
 
+            let img = await useTicket(event.title, parseInt(event.occupiedSeats) + 1, event.image);
+
             let metadata = {
                 name: event.title,
                 description: `NFT Ticket for ${event.title}`,
-                image: event.image,
+                image: img,
                 properties: {
                     'Ticket Number': parseInt(event.occupiedSeats) + 1,
                 },
@@ -72,8 +77,7 @@ function ID() {
             try {
                 let txn = await metapass.getTix(
                     event.eventOwner,
-                    JSON.stringify(metadata),
-                    { value: ethers.utils.parseEther(`${event.fee}`) }
+                    JSON.stringify(metadata), { value: ethers.utils.parseEther(`${event.fee}`) }
                 )
 
                 await txn.wait()
@@ -90,11 +94,12 @@ function ID() {
                 }
 
                 toast.success('NFT Sent to your wallet! ✨')
+                setInTxn(false)
             } catch (e) {
                 console.log(e)
             }
         } else {
-            console.log('connect wallet pls bro')
+            toast("Please connect wallet first")
         }
     }
 
@@ -126,7 +131,8 @@ function ID() {
                             m={2}
                             variant="outline"
                             onClick={mintTicket}
-                            isDisabled={!mintable}
+                            isDisabled={!mintable && inTxn}
+                            isLoading={inTxn}
                         >
                             {mintable ? 'get ticket' : 'sold out!'}
                         </Button>
@@ -157,12 +163,9 @@ function DateComponent({ date }) {
     const parsedDate = moment(date)
     console.log(parsedDate.day())
 
-    return (
-        <>
-            {parsedDate.day()}-{monthArray[parsedDate.month()]}-
-            {parsedDate.year()}
-        </>
-    )
+    return (<span> 
+        { parsedDate.day() } - { monthArray[parsedDate.month()] } - { parsedDate.year() } 
+        </span>)
 }
 
 export default ID
