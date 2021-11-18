@@ -65,7 +65,7 @@ const Create = () => {
                     eventOwner: wallet.address,
                     seats: seats,
                     occupiedSeats: 0,
-                    image: imageUrl,
+                    image: sampleImg,
                     date: date.toString(),
                     displayImage: sampleImg,
                 })
