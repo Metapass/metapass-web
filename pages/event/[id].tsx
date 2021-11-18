@@ -120,7 +120,13 @@ function ID() {
                             <title>{event.title + ' // metapass'}</title>
                         </Head>
                         <Heading m={2}>{event.title}</Heading>
-                        <Image src={event.image} alt={"img"} />
+                        {
+                            event.image ? (
+                                <Image src={event.image} alt={"img"} />) : (
+                                <Text>No image</Text>)
+
+                        }
+                        {console.log(event.image)}
                         <Text m={1}>total seats: {event.seats}</Text>
                         <Text m={1}>
                             total remaining:{' '}
