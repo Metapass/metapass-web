@@ -114,20 +114,26 @@ function ID() {
                 justifyContent={'center'}
                 alignItems={'center'}
             >
-                {event ? (
-                    <>
-                        <Head>
-                            <title>{event.title + ' // metapass'}</title>
-                        </Head>
-                        <Heading m={2}>{event.title}</Heading>
-
-                        <Skeleton 
-                        isLoaded={(event.image.length > 0) ? true : false}
+                <Skeleton isLoaded={event ? true : false}>
+                    <Flex
+                        flexDirection="row"
+                        justifyContent="space-evenly"
+                    >
+                        <Skeleton
+                            flex={1}
+                            isLoaded={(event.image.length > 0) ? true : false}
+                            width="24%"
                         >
                             <Image src={event.image}
                                 width="24%"
                                 alt={"img"} />
                         </Skeleton>
+                        <Head>
+                            <title>{event.title + ' // metapass'}</title>
+                        </Head>
+                        <Heading m={2}>{event.title}</Heading>
+
+
 
 
                         <Text m={1}>total seats: {event.seats}</Text>
@@ -143,17 +149,29 @@ function ID() {
                         <Button
                             p={4}
                             m={2}
-                            variant="outline"
+                            bgImage={mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg'}
                             onClick={mintTicket}
                             isDisabled={!mintable && inTxn}
                             isLoading={inTxn}
+                            bgRepeat="no-repeat"
+                            bgColor="transparent"
+                            _hover={{
+                                bg: 'transparent',
+                                bgRepeat: 'no-repeat',
+                                transform: 'scale(1.1)',
+                                bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
+                            }}
+                            _focus={{
+                                bg: 'transparent',
+                                bgRepeat: 'no-repeat',
+                                transform: 'scale(1.1)',
+                                bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
+                            }}
                         >
-                            {mintable ? 'get ticket' : 'sold out!'}
+
                         </Button>
-                    </>
-                ) : (
-                    <>Loading ...</>
-                )}
+                    </Flex>
+                </Skeleton>
             </Flex>
         </Box>
     )
