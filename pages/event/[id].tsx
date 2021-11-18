@@ -65,7 +65,7 @@ function ID() {
             let img = await ticketToIPFS(
                 event.title,
                 parseInt(event.occupiedSeats) + 1,
-                event.image
+                event.displayImage
             )
 
             let metadata = {
@@ -121,25 +121,23 @@ function ID() {
                                 flexDirection="row"
                                 justifyContent="space-evenly"
                             >
-                                <Skeleton
-                                    flex={1}
-                                    isLoaded={(event != null && event.image.length > 0) ? true : false}
-                                    width="24%"
-                                >
-                                    <Image src={event != null && event.image ?
-                                        event.image
+
+                                <Image
+                                    flex="1"
+                                    src={event != null && event.displayImage ?
+                                        event.displayImage
                                         :
                                         'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'
                                     }
-                                        width="24%"
-                                        alt={"img"} />
-                                </Skeleton>
+                                    width="50%"
+                                    alt={"img"} />
+
                                 <Head>
                                     <title>{event.title + ' // metapass'}</title>
                                 </Head>
                                 <Flex
-                                flexDirection="column"
-                                justifyContent="space-evenly"
+                                    flexDirection="column"
+                                    justifyContent="space-evenly"
                                 >
                                     <Heading m={2}>{event.title}</Heading>
 
@@ -158,6 +156,7 @@ function ID() {
                                     <Text m={2}>{event.description}</Text>
                                     <Button
                                         p={4}
+                                        width="100%"
                                         m={2}
                                         bgImage={mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg'}
                                         onClick={mintTicket}
@@ -171,7 +170,7 @@ function ID() {
                                             transform: 'scale(1.1)',
                                             bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
                                         }}
-                                        _focus={{
+                                        _active={{
                                             bg: 'transparent',
                                             bgRepeat: 'no-repeat',
                                             transform: 'scale(1.1)',
