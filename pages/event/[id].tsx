@@ -137,45 +137,50 @@ function ID() {
                                 <Head>
                                     <title>{event.title + ' // metapass'}</title>
                                 </Head>
-                                <Heading m={2}>{event.title}</Heading>
-
-
-
-
-                                <Text m={1}>total seats: {event.seats}</Text>
-                                <Text m={1}>
-                                    total remaining:{' '}
-                                    {parseInt(event.seats) -
-                                        parseInt(event.occupiedSeats)}
-                                </Text>
-                                <Text m={2}>
-                                    <DateComponent date={event.date} />
-                                </Text>
-                                <Text m={2}>{event.description}</Text>
-                                <Button
-                                    p={4}
-                                    m={2}
-                                    bgImage={mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg'}
-                                    onClick={mintTicket}
-                                    isDisabled={!mintable && inTxn}
-                                    isLoading={inTxn}
-                                    bgRepeat="no-repeat"
-                                    bgColor="transparent"
-                                    _hover={{
-                                        bg: 'transparent',
-                                        bgRepeat: 'no-repeat',
-                                        transform: 'scale(1.1)',
-                                        bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
-                                    }}
-                                    _focus={{
-                                        bg: 'transparent',
-                                        bgRepeat: 'no-repeat',
-                                        transform: 'scale(1.1)',
-                                        bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
-                                    }}
+                                <Flex
+                                flexDirection="column"
+                                justifyContent="space-evenly"
                                 >
+                                    <Heading m={2}>{event.title}</Heading>
 
-                                </Button>
+
+
+
+                                    <Text m={1}>total seats: {event.seats}</Text>
+                                    <Text m={1}>
+                                        total remaining:{' '}
+                                        {parseInt(event.seats) -
+                                            parseInt(event.occupiedSeats)}
+                                    </Text>
+                                    <Text m={2}>
+                                        <DateComponent date={event.date} />
+                                    </Text>
+                                    <Text m={2}>{event.description}</Text>
+                                    <Button
+                                        p={4}
+                                        m={2}
+                                        bgImage={mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg'}
+                                        onClick={mintTicket}
+                                        isDisabled={!mintable && inTxn}
+                                        isLoading={inTxn}
+                                        bgRepeat="no-repeat"
+                                        bgColor="transparent"
+                                        _hover={{
+                                            bg: 'transparent',
+                                            bgRepeat: 'no-repeat',
+                                            transform: 'scale(1.1)',
+                                            bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
+                                        }}
+                                        _focus={{
+                                            bg: 'transparent',
+                                            bgRepeat: 'no-repeat',
+                                            transform: 'scale(1.1)',
+                                            bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
+                                        }}
+                                    >
+
+                                    </Button>
+                                </Flex>
                             </Flex>
                         ) : null
                     }
