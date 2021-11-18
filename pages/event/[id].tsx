@@ -1,4 +1,4 @@
-import { Box, Flex, Button, Heading, Text, Image } from '@chakra-ui/react'
+import { Box, Flex, Button, Heading, Text, Image, Skeleton } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { doc, getDoc, db, updateDoc } from '../../utils/firebase'
 import { useEffect, useState, useContext } from 'react'
@@ -120,13 +120,16 @@ function ID() {
                             <title>{event.title + ' // metapass'}</title>
                         </Head>
                         <Heading m={2}>{event.title}</Heading>
-                        {
-                            event.image ? (
-                                <Image src={event.image} alt={"img"} />) : (
-                                <Text>No image</Text>)
 
-                        }
-                        {console.log(event.image)}
+                        <Skeleton 
+                        isLoaded={(event.image.length > 0) ? true : false}
+                        >
+                            <Image src={event.image}
+                                width="24%"
+                                alt={"img"} />
+                        </Skeleton>
+
+
                         <Text m={1}>total seats: {event.seats}</Text>
                         <Text m={1}>
                             total remaining:{' '}
