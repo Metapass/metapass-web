@@ -7,7 +7,7 @@ const ipfs = create({
     protocol: 'https',
 })
 
-const useTicket = async (title, ticketNumber, url) => {
+const ticketToIPFS = async (title, ticketNumber, url) => {
     const res = await axios.get(
         `https://radiant-caverns-43873.herokuapp.com/edit/url=${url}&hero_text=${title}&ticket_no=${ticketNumber}&venue=Metaverse&date=Dec%202021`
     )
@@ -17,4 +17,4 @@ const useTicket = async (title, ticketNumber, url) => {
     return `https://ipfs.io/ipfs/${cid.toString()}`
 }
 
-export { useTicket }
+export { ticketToIPFS }

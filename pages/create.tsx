@@ -6,7 +6,7 @@ import Head from 'next/head'
 import CreateForm from '../components/CreateForm'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { useTicket } from '../utils/useTicket'
+import { ticketToIPFS } from '../utils/ticketToIPFS'
 
 const Create = () => {
     const [wallet] = useContext(walletContext)
@@ -52,7 +52,11 @@ const Create = () => {
         } else if (title && description && file) {
             try {
                 let imageUrl = await uploadToCloudinary()
-                let sampleImg = await useTicket(title, "Ticket Number", imageUrl);
+                let sampleImg = await ticketToIPFS(
+                    title,
+                    'Ticket Number',
+                    imageUrl
+                )
                 let docRef = await addDoc(collection(db, 'events'), {
                     title: title,
                     description: description,
@@ -63,7 +67,7 @@ const Create = () => {
                     occupiedSeats: 0,
                     image: imageUrl,
                     date: date.toString(),
-                    displayImage: sampleImg
+                    displayImage: sampleImg,
                 })
                 setDocId(docRef.id)
                 setCreated(true)

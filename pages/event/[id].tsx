@@ -4,7 +4,7 @@ import { doc, getDoc, db, updateDoc } from '../../utils/firebase'
 import { useEffect, useState, useContext } from 'react'
 import { walletContext } from '../../utils/walletContext'
 import Head from 'next/head'
-import { useTicket } from '../../utils/useTicket'
+import { ticketToIPFS } from '../../utils/ticketToIPFS'
 import moment from 'moment'
 
 import { ethers } from 'ethers'
@@ -19,7 +19,7 @@ function ID() {
 
     const [event, setEvent]: any = useState(null)
     const [mintable, setMintable]: any = useState(false)
-    const [inTxn, setInTxn]: any = useState(false);
+    const [inTxn, setInTxn]: any = useState(false)
 
     const router = useRouter()
 
@@ -54,16 +54,19 @@ function ID() {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
-
         if (wallet.address) {
-            setInTxn(true);
+            setInTxn(true)
             const metapass = new ethers.Contract(
                 contractAddress,
                 abi.abi,
                 signer
             )
 
-            let img = await useTicket(event.title, parseInt(event.occupiedSeats) + 1, event.image);
+            let img = await ticketToIPFS(
+                event.title,
+                parseInt(event.occupiedSeats) + 1,
+                event.image
+            )
 
             let metadata = {
                 name: event.title,
@@ -77,7 +80,8 @@ function ID() {
             try {
                 let txn = await metapass.getTix(
                     event.eventOwner,
-                    JSON.stringify(metadata), { value: ethers.utils.parseEther(`${event.fee}`) }
+                    JSON.stringify(metadata),
+                    { value: ethers.utils.parseEther(`${event.fee}`) }
                 )
 
                 await txn.wait()
@@ -99,7 +103,7 @@ function ID() {
                 console.log(e)
             }
         } else {
-            toast("Please connect wallet first")
+            toast('Please connect wallet first')
         }
     }
 
@@ -163,9 +167,12 @@ function DateComponent({ date }) {
     const parsedDate = moment(date)
     console.log(parsedDate.day())
 
-    return (<span> 
-        { parsedDate.day() } - { monthArray[parsedDate.month()] } - { parsedDate.year() } 
-        </span>)
+    return (
+        <span>
+            {parsedDate.day()} - {monthArray[parsedDate.month()]} -{' '}
+            {parsedDate.year()}
+        </span>
+    )
 }
 
 export default ID

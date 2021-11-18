@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react'
 
 import Link from 'next/link'
-import moment from 'moment'
 
 function CreateForm({
     setTitle,
