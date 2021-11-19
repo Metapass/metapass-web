@@ -54,7 +54,7 @@ const Create = () => {
                 let imageUrl = await uploadToCloudinary()
                 let sampleImg = await ticketToIPFS(
                     title,
-                    'Ticket Number',
+                    '00x',
                     imageUrl
                 )
                 let docRef = await addDoc(collection(db, 'events'), {
