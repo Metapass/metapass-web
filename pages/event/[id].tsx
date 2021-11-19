@@ -121,17 +121,14 @@ function ID() {
                                 flexDirection="row"
                                 justifyContent="space-evenly"
                             >
-
+<Skeleton isLoaded={event.displayImage != null ? true : false}>
                                 <Image
                                     flex="1"
-                                    src={event != null && event.displayImage ?
-                                        event.displayImage
-                                        :
-                                        'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'
-                                    }
+                                    src={event.displayImage}
+                                    
                                     width="50%"
                                     alt={"img"} />
-
+</Skeleton>
                                 <Head>
                                     <title>{event.title + ' // metapass'}</title>
                                 </Head>
