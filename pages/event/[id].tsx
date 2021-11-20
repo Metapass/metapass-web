@@ -1,4 +1,12 @@
-import { Box, Flex, Button, Heading, Text, Image, Skeleton } from '@chakra-ui/react'
+import {
+    Box,
+    Flex,
+    Button,
+    Heading,
+    Text,
+    Image,
+    Skeleton,
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { doc, getDoc, db, updateDoc } from '../../utils/firebase'
 import { useEffect, useState, useContext } from 'react'
@@ -65,7 +73,8 @@ function ID() {
             let img = await ticketToIPFS(
                 event.title,
                 parseInt(event.occupiedSeats) + 1,
-                event.displayImage
+                event.image,
+                event.date
             )
 
             let metadata = {
@@ -108,168 +117,164 @@ function ID() {
     }
 
     return (
-
         <Flex
             direction="column"
             justifyContent={'center'}
             alignItems="flex-start"
         >
             <Skeleton isLoaded={event != null ? true : false}>
-                {
-                    event ? (
-                        <Flex
-                            flexDirection="row"
-                            justifyContent="flex-start"
-                            alignContent="center"
-                            ml={'15%'}
-                            mt={'5%'}
+                {event ? (
+                    <Flex
+                        flexDirection="row"
+                        justifyContent="flex-start"
+                        alignContent="center"
+                        ml={'15%'}
+                        mt={'5%'}
+                    >
+                        <Skeleton
+                            w="700px"
+                            marginRight="20px"
+                            isLoaded={event.displayImage != null ? true : false}
                         >
-                            <Skeleton
-                                w="700px"
-                                marginRight="20px"
-                                isLoaded={event.image != null ? true : false}>
-                                <Image
-                                    
-                                    src={event.image}
-                                    w={'600px'}
-                                    alt={"img"} />
-
-                            </Skeleton>
-                            <Head>
-                                <title>{event.title + ' // metapass'}</title>
-                            </Head>
-                            <Flex
-                                flexDirection="column"
-                                justifyContent="space-evenly"
-                                m={'5%'}
-                                flex={1}
-                            
+                            <Image
+                                rounded="md"
+                                src={event.image}
+                                w={'600px'}
+                                alt={'img'}
+                            />
+                        </Skeleton>
+                        <Head>
+                            <title>{event.title + ' // metapass'}</title>
+                        </Head>
+                        <Flex
+                            flexDirection="column"
+                            justifyContent="space-evenly"
+                            m={'5%'}
+                            flex={1}
+                        >
+                            <Heading
+                                ml="2rem"
+                                mt="-1rem"
+                                w="100%"
+                                fontSize="50px"
+                                lineHeight="89.3%"
+                                alignSelf="center"
+                                className="hero-text"
+                                fontFamily="Azonix"
+                                color="white"
                             >
-                                <Heading
-                                    
-                                    ml="2rem"
-                                    mt="-1rem"
-                                    w="100%"
-                                    fontSize="50px"
-                                    lineHeight="89.3%"
-                                    alignSelf="center"
-                                    className="hero-text"
-                                    fontFamily="Azonix"
-                                    color="white"
-                                >
-                                    <style jsx>{`
-                @font-face {
-                    font-family: 'Azonix';
-                    src: url('/fonts/Azonix.otf');
-                }
-                .hero-text {
-                    font-family: 'Azonix';
-                }
-            `}</style>
-                                    {event.title}
-                                </Heading>
+                                <style jsx>{`
+                                    @font-face {
+                                        font-family: 'Azonix';
+                                        src: url('/fonts/Azonix.otf');
+                                    }
+                                    .hero-text {
+                                        font-family: 'Azonix';
+                                    }
+                                `}</style>
+                                {event.title}
+                            </Heading>
 
-
-
-
-                                
-                                <Text
-                    w="545.25px"
-                    ml="1rem"
-                    mt="1rem"
-                    // position="absolute"
-                    // top="420.5px"
-                    // left="80px"
-                    fontSize="25px"
-                    style={{ fontFamily: "'PT Sans', sans-serif" }}
-                    letterSpacing="0.02em"
-                    lineHeight="29px"
-                    fontStyle="normal"
-                    color="rgba(255, 255, 255, 0.81)"
-                >
-                    {event.description}
-                </Text>
-                <Text
-                    w="545.25px"
-                 fontStyle="normal"
-                    ml="1rem"
-                    mt="2rem"
-                    // position="absolute"
-                    // top="420.5px"
-                    // left="80px"
-                    fontSize="25px"
-                    style={{ fontFamily: "'PT Sans', sans-serif" }}
-                    letterSpacing="0.02em"
-                    lineHeight="29px"
-                    fontWeight="bold"
-                    color="rgba(255, 255, 255, 0.81)"
-                >
-                    Remaining Tickets
-                </Text>
-                <Text
-                    w="545.25px"
-                 fontStyle="normal"
-                    ml="1rem"
-                    mt="1rem"
-                    mb="1.5rem"
-                    // position="absolute"
-                    // top="420.5px"
-                    // left="80px"
-                    fontSize="45px"
-                    fontFamily="Azonix"
-                    
-                    lineHeight="40px"
-                    fontWeight="normal"
-                    color="rgba(255, 255, 255, 0.81)"
-                >
-                    <style jsx>{`
-                @font-face {
-                    font-family: 'Azonix';
-                    src: url('/fonts/Azonix.otf');
-                }
-                .hero-text {
-                    font-family: 'Azonix';
-                }
-            `}</style>
-                    0{event.occupiedSeats}/{event.seats}
-                </Text>
-                                <Text m={2}>
-                                    <DateComponent date={event.date} />
-                                </Text>
-                                <Button
-                                    p={4}
-                                    width="100%"
-                                    m={"1rem"}
-                                    bgImage={mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg'}
-                                    onClick={mintTicket}
-                                    isDisabled={!mintable && inTxn}
-                                    isLoading={inTxn}
-                                    bgRepeat="no-repeat"
-                                    bgColor="transparent"
-                                    _hover={{
-                                        bg: 'transparent',
-                                        bgRepeat: 'no-repeat',
-                                        transform: 'scale(1.1)',
-                                        outline: 'none',
-                                        bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
-                                    }}
-                                    _active={{
-                                        bg: 'transparent',
-                                        bgRepeat: 'no-repeat',
-                                        transform: 'scale(1.1)',
-                                        outline: 'none',
-                                        bgImage: mintable ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg' : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
-                                    }}
-                                >
-
-                                </Button>
-                            </Flex>
+                            <Text
+                                w="545.25px"
+                                ml="1rem"
+                                mt="1rem"
+                                // position="absolute"
+                                // top="420.5px"
+                                // left="80px"
+                                fontSize="25px"
+                                style={{ fontFamily: "'PT Sans', sans-serif" }}
+                                letterSpacing="0.02em"
+                                lineHeight="29px"
+                                fontStyle="normal"
+                                color="rgba(255, 255, 255, 0.81)"
+                            >
+                                {event.description}
+                            </Text>
+                            <Text
+                                w="545.25px"
+                                fontStyle="normal"
+                                ml="1rem"
+                                mt="2rem"
+                                // position="absolute"
+                                // top="420.5px"
+                                // left="80px"
+                                fontSize="22px"
+                                style={{ fontFamily: "'PT Sans', sans-serif" }}
+                                letterSpacing="0.02em"
+                                lineHeight="29px"
+                                fontWeight="bold"
+                                color="rgba(255, 255, 255, 0.81)"
+                            >
+                                Tickets Sold
+                            </Text>
+                            <Text
+                                w="545.25px"
+                                fontStyle="normal"
+                                ml="1rem"
+                                mt="1rem"
+                                mb="1.5rem"
+                                // position="absolute"
+                                // top="420.5px"
+                                // left="80px"
+                                fontSize="35px"
+                                fontFamily="Azonix"
+                                lineHeight="40px"
+                                fontWeight="normal"
+                                color="rgba(255, 255, 255, 0.81)"
+                            >
+                                <style jsx>{`
+                                    @font-face {
+                                        font-family: 'Azonix';
+                                        src: url('/fonts/Azonix.otf');
+                                    }
+                                    .hero-text {
+                                        font-family: 'Azonix';
+                                    }
+                                `}</style>
+                                {event.occupiedSeats}/{event.seats}
+                            </Text>
+                            <Text mx={4} my={2}>
+                                <DateComponent date={event.date} />
+                            </Text>
+                            <Button
+                                p={4}
+                                width="100%"
+                                m={'1rem'}
+                                bgImage={
+                                    mintable
+                                        ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
+                                        : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg'
+                                }
+                                onClick={mintTicket}
+                                isDisabled={!mintable && inTxn}
+                                isLoading={inTxn}
+                                bgRepeat="no-repeat"
+                                bgColor="transparent"
+                                _hover={{
+                                    bg: 'transparent',
+                                    bgRepeat: 'no-repeat',
+                                    transform: 'scale(1.1)',
+                                    outline: 'none',
+                                    bgImage: mintable
+                                        ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
+                                        : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
+                                }}
+                                _active={{
+                                    bg: 'transparent',
+                                    bgRepeat: 'no-repeat',
+                                    transform: 'scale(1.1)',
+                                    outline: 'none',
+                                    bgImage: mintable
+                                        ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
+                                        : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
+                                }}
+                            ></Button>
                         </Flex>
-                    ) : null
-                }
+                    </Flex>
+                ) : null}
             </Skeleton>
         </Flex>
-
     )
 }
 
@@ -289,11 +294,11 @@ function DateComponent({ date }) {
         'Dec',
     ]
     const parsedDate = moment(date)
-    console.log(parsedDate.day())
+    console.log(parsedDate)
 
     return (
         <span>
-            {parsedDate.day()} - {monthArray[parsedDate.month()]} -{' '}
+            {parsedDate.day()} {monthArray[parsedDate.month()]},{' '}
             {parsedDate.year()}
         </span>
     )

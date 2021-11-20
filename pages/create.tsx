@@ -55,7 +55,8 @@ const Create = () => {
                 let sampleImg = await ticketToIPFS(
                     title,
                     '00x',
-                    imageUrl
+                    imageUrl,
+                    '24 Dec 2021 00:00:00 GMT+0530'
                 )
                 let docRef = await addDoc(collection(db, 'events'), {
                     title: title,
