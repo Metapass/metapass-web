@@ -33,6 +33,9 @@ const ticketToIPFS = async (title, ticketNumber, url, date) => {
 
     // @ts-ignore
     let { cid } = await ipfs.add(urlSource(res.data[0]))
+    await axios.post('/api/pin', {
+        hash: cid,
+    })
     return `https://ipfs.io/ipfs/${cid.toString()}`
 }
 

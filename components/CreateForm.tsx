@@ -21,6 +21,8 @@ function CreateForm({
     setSeats,
     setFile,
     setDate,
+    setManual,
+    inTxn,
 }: any) {
     return (
         <>
@@ -73,14 +75,26 @@ function CreateForm({
                     <InputRightAddon>MATIC</InputRightAddon>
                 </InputGroup>
             ) : null}
-            <hr />
             <Input
-                type="datetime-local"
+                type="date"
                 onChange={({ target }) => {
                     setDate(new Date(target.value))
                 }}
             />
-            <Button m={2} variant="outline" p={4} onClick={uploadToFirebase}>
+            <hr color="red" />
+            <Input
+                m={2}
+                onChange={(e) => setManual(e.target.value)}
+                placeholder="link to join events for attendees"
+            />
+            <Button
+                m={2}
+                variant="outline"
+                p={4}
+                isLoading={inTxn}
+                disabled={inTxn}
+                onClick={uploadToFirebase}
+            >
                 Create Event
             </Button>
         </>

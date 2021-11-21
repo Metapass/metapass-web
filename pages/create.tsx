@@ -18,14 +18,14 @@ const Create = () => {
     const [seats, setSeats]: any = useState(0)
     const [file, setFile]: any = useState(undefined)
     const [date, setDate]: any = useState(undefined)
-    const [cid, setCid]: any = useState('')
+    const [manual, setManual]: any = useState(null)
 
     const [created, setCreated] = useState(false)
 
     const [docId, setDocId]: any = useState(null)
-
+    const [txn, setInTxn] = useState(false)
     const { hasCopied, onCopy } = useClipboard(
-        `https://metapass.vercel.app/event/${docId}`
+        `https://metapass-web-production.up.railway.app/event/${docId}`
     )
 
     if (hasCopied) {
@@ -50,14 +50,10 @@ const Create = () => {
             console.log('login pls')
             toast('Connect Wallet')
         } else if (title && description && file) {
+            setInTxn(true)
             try {
                 let imageUrl = await uploadToCloudinary()
-                let sampleImg = await ticketToIPFS(
-                    title,
-                    '00x',
-                    imageUrl,
-                    '24 Dec 2021 00:00:00 GMT+0530'
-                )
+
                 let docRef = await addDoc(collection(db, 'events'), {
                     title: title,
                     description: description,
@@ -68,10 +64,11 @@ const Create = () => {
                     occupiedSeats: 0,
                     image: imageUrl,
                     date: date.toString(),
-                    displayImage: sampleImg,
+                    manual: manual,
                 })
                 setDocId(docRef.id)
                 setCreated(true)
+                setInTxn(false)
             } catch (e) {
                 console.log(e)
             }
@@ -111,6 +108,8 @@ const Create = () => {
                         setIsPaid={setIsPaid}
                         setSeats={setSeats}
                         setDate={setDate}
+                        setManual={setManual}
+                        inTxn={txn}
                     >
                         {' '}
                     </CreateForm>

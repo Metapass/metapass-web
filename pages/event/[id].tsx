@@ -58,7 +58,7 @@ function ID() {
     }, [id])
 
     const mintTicket = async () => {
-        const contractAddress = '0xD026d2732EFA940080e178ef75557b19df2E47EA'
+        const contractAddress = '0xC93f5aF8f4D4620A1ffe255D7f4A06f6fBd91403'
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
@@ -90,6 +90,7 @@ function ID() {
                 let txn = await metapass.getTix(
                     event.eventOwner,
                     JSON.stringify(metadata),
+                    event.manual,
                     { value: ethers.utils.parseEther(`${event.fee}`) }
                 )
 
@@ -134,7 +135,7 @@ function ID() {
                         <Skeleton
                             w="700px"
                             marginRight="20px"
-                            isLoaded={event.displayImage != null ? true : false}
+                            isLoaded={event.image != null ? true : false}
                         >
                             <Image
                                 rounded="md"
@@ -174,31 +175,11 @@ function ID() {
                                 `}</style>
                                 {event.title}
                             </Heading>
-
-                            <Text
-                                w="545.25px"
-                                ml="1rem"
-                                mt="1rem"
-                                // position="absolute"
-                                // top="420.5px"
-                                // left="80px"
-                                fontSize="25px"
-                                style={{ fontFamily: "'PT Sans', sans-serif" }}
-                                letterSpacing="0.02em"
-                                lineHeight="29px"
-                                fontStyle="normal"
-                                color="rgba(255, 255, 255, 0.81)"
-                            >
-                                {event.description}
-                            </Text>
                             <Text
                                 w="545.25px"
                                 fontStyle="normal"
                                 ml="1rem"
                                 mt="2rem"
-                                // position="absolute"
-                                // top="420.5px"
-                                // left="80px"
                                 fontSize="22px"
                                 style={{ fontFamily: "'PT Sans', sans-serif" }}
                                 letterSpacing="0.02em"
@@ -214,10 +195,7 @@ function ID() {
                                 ml="1rem"
                                 mt="1rem"
                                 mb="1.5rem"
-                                // position="absolute"
-                                // top="420.5px"
-                                // left="80px"
-                                fontSize="35px"
+                                fontSize="30px"
                                 fontFamily="Azonix"
                                 lineHeight="40px"
                                 fontWeight="normal"
@@ -234,8 +212,24 @@ function ID() {
                                 `}</style>
                                 {event.occupiedSeats}/{event.seats}
                             </Text>
-                            <Text mx={4} my={2}>
+                            <Text mx={4}>
                                 <DateComponent date={event.date} />
+                            </Text>
+                            <Text
+                                w="545.25px"
+                                ml="1rem"
+                                mt="1rem"
+                                fontSize="25px"
+                                style={{ fontFamily: "'PT Sans', sans-serif" }}
+                                letterSpacing="0.02em"
+                                lineHeight="29px"
+                                fontStyle="normal"
+                                color="rgba(255, 255, 255, 0.81)"
+                            >
+                                {event.description}
+                            </Text>
+                            <Text mx={4} my={2} fontSize="20px">
+                                cost: {event.fee} MATIC
                             </Text>
                             <Button
                                 p={4}
@@ -294,13 +288,11 @@ function DateComponent({ date }) {
         'Dec',
     ]
     const parsedDate = moment(date)
-    console.log(parsedDate)
-
     return (
-        <span>
+        <Text fontSize={'30px'} style={{ fontFamily: "'PT Sans', sans-serif" }}>
             {parsedDate.day()} {monthArray[parsedDate.month()]},{' '}
             {parsedDate.year()}
-        </span>
+        </Text>
     )
 }
 
