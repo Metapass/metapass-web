@@ -1,5 +1,6 @@
-import { Flex, Button, Box, Image } from '@chakra-ui/react'
+import { Flex, Button, Box, Image, useDisclosure, Text } from '@chakra-ui/react'
 import Link from 'next/link'
+import HowToModal from './HowToModal'
 
 function Header({ bal, address, handleWalletConnect }: any) {
     let addressDisplay
@@ -16,6 +17,7 @@ function Header({ bal, address, handleWalletConnect }: any) {
             addArr[addArr.length - 2] +
             addArr[addArr.length - 1]
     }
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
         <Flex rounded="md" direction="row" p={2} justifyContent="space-between">
@@ -29,9 +31,10 @@ function Header({ bal, address, handleWalletConnect }: any) {
                     />
                 </Flex>
             </Link>
-            <Flex>
+            <Flex mt="1rem">
                 {bal && address ? (
                     <>
+                        <HowToModal isOpen={isOpen as any} onClose={onClose} />
                         <Box m={2} p={2}>
                             <Link href="/create">Create event</Link>
                         </Box>
@@ -41,7 +44,11 @@ function Header({ bal, address, handleWalletConnect }: any) {
                         </Box>
 
                         <Box m={2} p={2}>
-                            <Link href="#">How it works?</Link>
+                            <Link href="/myevents">My Events</Link>
+                        </Box>
+
+                        <Box m={2} p={2}>
+                            <Text onClick={onOpen}>How it works?</Text>
                         </Box>
                         <Button variant="outline" p={4} rounded={'md'} m={2}>
                             {' '}

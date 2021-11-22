@@ -26,7 +26,7 @@ const monthArray = [
 const ticketToIPFS = async (title, ticketNumber, url, date) => {
     let parsedDate = moment(date)
     const res = await axios.get(
-        `https://radiant-caverns-43873.herokuapp.com/edit/url=${url}&hero_text=${title}&ticket_no=#${ticketNumber}&venue=Metaverse&date=${
+        `https://radiant-caverns-43873.herokuapp.com/edit/url=${url}&hero_text=${title}&ticket_no=${ticketNumber.toString()}&venue=Metaverse&date=${
             monthArray[parsedDate.month()] + `%20` + parsedDate.year()
         }`
     )
@@ -34,7 +34,7 @@ const ticketToIPFS = async (title, ticketNumber, url, date) => {
     // @ts-ignore
     let { cid } = await ipfs.add(urlSource(res.data[0]))
     await axios.post('/api/pin', {
-        hash: cid,
+        hash: cid.toString(),
     })
     return `https://ipfs.io/ipfs/${cid.toString()}`
 }

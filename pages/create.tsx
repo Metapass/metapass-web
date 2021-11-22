@@ -93,7 +93,7 @@ const Create = () => {
                             you've successfully created an event! Share this
                             link for booking{' '}
                             <Code onClick={onCopy}>
-                                {`https://metapass.vercel.app/event/${docId}`}
+                                {`https://metapass-web-production.up.railway.app/event/${docId}`}
                             </Code>
                         </Text>
                     </>

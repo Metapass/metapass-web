@@ -8,6 +8,7 @@ import {
     InputRightAddon,
     Button,
 } from '@chakra-ui/react'
+import crypto from 'crypto-js'
 
 import Link from 'next/link'
 
@@ -24,6 +25,13 @@ function CreateForm({
     setManual,
     inTxn,
 }: any) {
+    const encryptLink = (link) => {
+        let enc = crypto.AES.encrypt(
+            link,
+            process.env.NEXT_PUBLIC_SECRET_KEY
+        ).toString()
+        setManual(enc)
+    }
     return (
         <>
             <Heading m={2}>Create an event</Heading>
@@ -84,7 +92,7 @@ function CreateForm({
             <hr color="red" />
             <Input
                 m={2}
-                onChange={(e) => setManual(e.target.value)}
+                onChange={(e) => encryptLink(e.target.value)}
                 placeholder="link to join events for attendees"
             />
             <Button

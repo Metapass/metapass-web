@@ -58,7 +58,7 @@ function ID() {
     }, [id])
 
     const mintTicket = async () => {
-        const contractAddress = '0xC93f5aF8f4D4620A1ffe255D7f4A06f6fBd91403'
+        const contractAddress = '0xCC74F175f169B1407De9268d685dCdC02f175B2C'
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
@@ -86,17 +86,22 @@ function ID() {
                 },
             }
 
+            console.log(ethers.utils.parseEther(`${event.fee}`)._hex.toString())
+
             try {
                 let txn = await metapass.getTix(
                     event.eventOwner,
                     JSON.stringify(metadata),
                     event.manual,
-                    { value: ethers.utils.parseEther(`${event.fee}`) }
+                    event.title,
+                    {
+                        value: await ethers.utils.parseEther(`${event.fee}`),
+                    }
                 )
 
                 await txn.wait()
 
-                console.log('Txn completed!')
+                console.log('Txn completed!', txn)
 
                 if (id) {
                     let docRef: any = doc(db, 'events', id.toString())
@@ -111,6 +116,7 @@ function ID() {
                 setInTxn(false)
             } catch (e) {
                 console.log(e)
+                setInTxn(false)
             }
         } else {
             toast('Please connect wallet first')
@@ -212,7 +218,11 @@ function ID() {
                                 `}</style>
                                 {event.occupiedSeats}/{event.seats}
                             </Text>
-                            <Text mx={4}>
+                            <Text
+                                mx={4}
+                                fontSize={'30px'}
+                                style={{ fontFamily: "'PT Sans', sans-serif" }}
+                            >
                                 <DateComponent date={event.date} />
                             </Text>
                             <Text
@@ -289,10 +299,10 @@ function DateComponent({ date }) {
     ]
     const parsedDate = moment(date)
     return (
-        <Text fontSize={'30px'} style={{ fontFamily: "'PT Sans', sans-serif" }}>
-            {parsedDate.day()} {monthArray[parsedDate.month()]},{' '}
+        <span>
+            {parsedDate.date()} {monthArray[parsedDate.month()]},{' '}
             {parsedDate.year()}
-        </Text>
+        </span>
     )
 }
 
