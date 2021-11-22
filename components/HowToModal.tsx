@@ -10,8 +10,7 @@ import {
     Button,
 } from '@chakra-ui/react'
 
-function HowToModal() {
-    const { isOpen, onClose } = useDisclosure()
+function HowToModal({ isOpen, onClose }) {
     return (
         <div>
             <Modal isOpen={isOpen} onClose={onClose} size="xl">
@@ -19,13 +18,14 @@ function HowToModal() {
                 <ModalContent>
                     <ModalHeader>Modal Title</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody></ModalBody>
+                    <ModalBody>
+                        A video tutorial will be uploaded soon
+                    </ModalBody>
 
                     <ModalFooter>
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant="ghost">Secondary Action</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
