@@ -3,9 +3,8 @@ import { ethers } from 'ethers'
 import abi from '../utils/Metapass.json'
 import { walletContext } from '../utils/walletContext'
 import { Box, Flex, Text } from '@chakra-ui/react'
-import crypto from 'crypto-js'
 import Head from 'next/head'
-import Link from 'next/link'
+import EventLinks from '../components/EventLinks'
 
 declare const window: any
 
@@ -44,42 +43,32 @@ const MyEvents = () => {
         getSecrets()
     }, [wallet])
 
-    const decryptLinks = (str) => {
-        let dec = crypto.AES.decrypt(str, process.env.NEXT_PUBLIC_SECRET_KEY)
-        return dec.toString(crypto.enc.Utf8)
-    }
-
-    const renderLinks = () => {
-        return link.map((el, idx) => (
-            <div key={idx}>
-                <Link href={decryptLinks(el.encryptedLink)}>{el.title}</Link>
-            </div>
-        ))
-    }
-
     return (
         <Box p={4}>
-            <Head>
-                <title>my events // metapass</title>
-            </Head>
-            <Text variant="primary">
-                Click on title to open the desired instructions
-            </Text>
-            {wallet.address ? (
-                <Flex
-                    direction="column"
-                    alignItems={'center'}
-                    justifyContent={'center'}
-                >
-                    {link ? (
-                        <Flex>{renderLinks()}</Flex>
-                    ) : (
-                        <div>loading...</div>
-                    )}
-                </Flex>
-            ) : (
-                <div>Connect Wallet</div>
-            )}
+            <Flex
+                justifyContent="center"
+                alignItems="center"
+                direction="column"
+            >
+                <Head>
+                    <title>my events // metapass</title>
+                </Head>
+                {wallet.address ? (
+                    <Flex
+                        direction="column"
+                        alignItems={'center'}
+                        justifyContent={'center'}
+                    >
+                        {link ? (
+                            <EventLinks link={link} />
+                        ) : (
+                            <div>loading...</div>
+                        )}
+                    </Flex>
+                ) : (
+                    <div>Connect Wallet to view your events</div>
+                )}
+            </Flex>
         </Box>
     )
 }

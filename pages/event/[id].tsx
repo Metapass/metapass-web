@@ -163,6 +163,7 @@ function ID() {
                                 ml="2rem"
                                 mt="-1rem"
                                 w="100%"
+                                mb="5"
                                 fontSize="50px"
                                 lineHeight="89.3%"
                                 alignSelf="center"
@@ -181,26 +182,11 @@ function ID() {
                                 `}</style>
                                 {event.title}
                             </Heading>
+                            <hr />
                             <Text
-                                w="545.25px"
                                 fontStyle="normal"
-                                ml="1rem"
-                                mt="2rem"
-                                fontSize="22px"
-                                style={{ fontFamily: "'PT Sans', sans-serif" }}
-                                letterSpacing="0.02em"
-                                lineHeight="29px"
-                                fontWeight="bold"
-                                color="rgba(255, 255, 255, 0.81)"
-                            >
-                                Tickets Sold
-                            </Text>
-                            <Text
-                                w="545.25px"
-                                fontStyle="normal"
-                                ml="1rem"
-                                mt="1rem"
-                                mb="1.5rem"
+                                my="2"
+                                mx={4}
                                 fontSize="30px"
                                 fontFamily="Azonix"
                                 lineHeight="40px"
@@ -216,19 +202,33 @@ function ID() {
                                         font-family: 'Azonix';
                                     }
                                 `}</style>
-                                {event.occupiedSeats}/{event.seats}
+                                Tickets Sold: {event.occupiedSeats}/
+                                {event.seats}
                             </Text>
                             <Text
                                 mx={4}
-                                fontSize={'30px'}
-                                style={{ fontFamily: "'PT Sans', sans-serif" }}
+                                mb={2}
+                                fontSize={'25px'}
+                                // style={{ fontFamily: "'PT Sans', sans-serif" }}
+                                fontFamily="Inter"
                             >
+                                <style jsx>{`
+                                    @font-face {
+                                        font-family: 'Inter';
+                                        src: url('https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900');
+                                    }
+                                    .hero-text {
+                                        font-family: 'Inter';
+                                    }
+                                `}</style>
                                 <DateComponent date={event.date} />
                             </Text>
+                            <hr />
                             <Text
                                 w="545.25px"
                                 ml="1rem"
                                 mt="1rem"
+                                mb={2}
                                 fontSize="25px"
                                 style={{ fontFamily: "'PT Sans', sans-serif" }}
                                 letterSpacing="0.02em"
@@ -238,8 +238,8 @@ function ID() {
                             >
                                 {event.description}
                             </Text>
-                            <Text mx={4} my={2} fontSize="20px">
-                                cost: {event.fee} MATIC
+                            <Text mx={4} mt={2} mb={-1} fontSize="22px">
+                                $MATIC {event.fee}
                             </Text>
                             <Button
                                 p={4}
