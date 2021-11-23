@@ -17,6 +17,7 @@
     "@pinata/sdk": "^1.1.23",
     "axios": "^0.24.0",
     "crypto-js": "^4.1.1",
+    "electron": "^16.0.1",
     "ethers": "^5.5.1",
     "firebase": "^9.2.0",
     "framer-motion": "^4.1.17",
