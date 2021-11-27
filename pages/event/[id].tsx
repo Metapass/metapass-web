@@ -108,6 +108,17 @@ function ID() {
                     updateDoc(docRef, {
                         occupiedSeats: event.occupiedSeats + 1,
                     }).then((r) => console.log('updated backend'))
+                    let docRef2: any = doc(db, 'users', wallet.address)
+                    updateDoc(docRef2, {
+                        event: event.eventOwner,
+                        image: img,
+                        title: event.title,
+                        fee: event.fee,
+                    })
+                        .then((r) => console.log('updated doc'))
+                        .catch((e) => {
+                            console.log(e)
+                        })
                 } else {
                     console.log('no id found')
                 }

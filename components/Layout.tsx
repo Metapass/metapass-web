@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Header from './Header'
 import Web3 from 'web3'
 import { walletContext } from '../utils/walletContext'
@@ -15,10 +15,10 @@ const Layout = ({ children }: any) => {
 
     let endpoint: any = process.env.NEXT_PUBLIC_ENDPOINT
 
-    let web3 = new Web3(endpoint)
-
     async function loadAccounts() {
         windowType = window
+        let web3 = new Web3(windowType.web3.currentProvider)
+
         let accounts = await windowType.ethereum.request({
             method: 'eth_requestAccounts',
         })
@@ -45,6 +45,9 @@ const Layout = ({ children }: any) => {
         setBalance(null)
     }
 
+    useEffect(() => {
+        loadAccounts()
+    }, [])
     return (
         <div>
             <Header
