@@ -4,8 +4,16 @@ import abi from '../utils/Metapass.json'
 import { walletContext } from '../utils/walletContext'
 import { Box, Flex, Text } from '@chakra-ui/react'
 import Head from 'next/head'
+import EventWidget from '../components/EventWidget'
 import EventLinks from '../components/EventLinks'
-
+import {
+    doc,
+    getDoc,
+    db,
+    updateDoc,
+    collection,
+    firebase,
+} from '../utils/firebase'
 declare const window: any
 
 const MyEvents = () => {
@@ -14,6 +22,22 @@ const MyEvents = () => {
 
     const [wallet] = useContext(walletContext)
     const [link, setLink] = useState(null)
+    const [event, setEvent] = useState(null)
+
+    useEffect(() => {
+        const fetchDataofwalletaddressfromfirebase = async () => {
+            const docRef = doc(db, 'users', wallet.address)
+            const docSnap = await getDoc(docRef)
+            if (docSnap.exists) {
+                const data = docSnap.data()
+                setEvent(data)
+            } else {
+                setEvent(null)
+            }
+        }
+        fetchDataofwalletaddressfromfirebase()
+    }, [wallet.address])
+    console.log(wallet)
 
     useEffect(() => {
         const getSecrets = async () => {
@@ -60,7 +84,7 @@ const MyEvents = () => {
                         justifyContent={'center'}
                     >
                         {link ? (
-                            <EventLinks link={link} />
+                            <EventWidget event={event} link={link} />
                         ) : (
                             <div>loading...</div>
                         )}
