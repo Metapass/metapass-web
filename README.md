@@ -13,9 +13,9 @@ Clone the repo locally
 
 ## Roadmap
 
--   Completely decentralised approach to store event details on chain
+- [ ]  Completely decentralised approach to store event details on chain
 
--   Implementing meta transactions to have even seamless experience
+- [ ]  Implementing meta transactions to have even seamless experience
 
 ## Demo
 
