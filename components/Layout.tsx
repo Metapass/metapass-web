@@ -23,7 +23,7 @@ const Layout = ({ children }: any) => {
             method: 'eth_requestAccounts',
         })
 
-        if (windowType.ethereum.networkVersion == '80001') {
+        if (windowType.ethereum.networkVersion == '137') {
             setAddress(accounts[0])
             let bal = await web3.eth.getBalance(accounts[0])
             let ethBal: any = await web3.utils.fromWei(bal, 'ether')
@@ -34,7 +34,7 @@ const Layout = ({ children }: any) => {
                 address: accounts[0],
             })
         } else {
-            toast('Switch to Matic Mumbai Testnet and try again')
+            toast('Switch to Matic Mainnet and try again')
         }
     }
 
