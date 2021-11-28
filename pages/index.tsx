@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import HeroText from '../components/herotext'
-import { Text, Box, Flex, Button, Image } from '@chakra-ui/react'
+import { Text, Box, Flex, Button, Image, Link } from '@chakra-ui/react'
 import HeroTicket from '../components/heroticket'
 
 const Home: NextPage = () => {
@@ -56,22 +56,24 @@ const Home: NextPage = () => {
                     it's bought with $MATIC.
                 </Text>
             </Flex>
-            <Button
-                bgRepeat="no-repeat"
-                w="217.89px"
-                bgColor="transparent"
-                position="absolute"
-                left="90.27px"
-                _hover={{
-                    bg: 'transparent',
-                    bgRepeat: 'no-repeat',
-                    transform: 'scale(1.1)',
-                    bgImage:
-                        'https://res.cloudinary.com/dev-connect/image/upload/v1636468144/svgs/getstarted_auqixd.svg',
-                }}
-                top="540.67px"
-                bgImage="https://res.cloudinary.com/dev-connect/image/upload/v1636468144/svgs/getstarted_auqixd.svg"
-            ></Button>
+            <Link href="/create">
+                <Button
+                    bgRepeat="no-repeat"
+                    w="217.89px"
+                    bgColor="transparent"
+                    position="absolute"
+                    left="90.27px"
+                    _hover={{
+                        bg: 'transparent',
+                        bgRepeat: 'no-repeat',
+                        transform: 'scale(1.1)',
+                        bgImage:
+                            'https://res.cloudinary.com/dev-connect/image/upload/v1636468144/svgs/getstarted_auqixd.svg',
+                    }}
+                    top="540.67px"
+                    bgImage="https://res.cloudinary.com/dev-connect/image/upload/v1636468144/svgs/getstarted_auqixd.svg"
+                ></Button>
+            </Link>
             <Flex justifyContent="center">
                 <Image
                     p={5}
