@@ -6,7 +6,6 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
     Button,
 } from '@chakra-ui/react'
 
@@ -16,10 +15,14 @@ function HowToModal({ isOpen, onClose }) {
             <Modal isOpen={isOpen} onClose={onClose} size="xl">
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalHeader>How it works?</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        A video tutorial will be uploaded soon
+                        <iframe
+                            width="420"
+                            height="315"
+                            src="https://www.youtube.com/embed/SkQ2QJkplpw?autoplay=0&mute=1"
+                        ></iframe>
                     </ModalBody>
 
                     <ModalFooter>

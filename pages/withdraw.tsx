@@ -15,7 +15,7 @@ function Widthdraw() {
     let metapass: any
 
     if (typeof window !== 'undefined') {
-        const contractAddress = '0x05ee02512Be6394C72743e6B131Ce5B39E875C67'
+        const contractAddress = '0xD9b5a4Efe3f6e43C3b437B495dDB8668A3a3258d'
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
         metapass = new ethers.Contract(contractAddress, abi.abi, signer)
