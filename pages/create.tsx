@@ -93,7 +93,7 @@ const Create = () => {
                             you've successfully created an event! Share this
                             link for booking{' '}
                             <Code onClick={onCopy}>
-                                {`https://metapass.ml/event/${docId}`}
+                                {`https://testnet.metapass.ml/event/${docId}`}
                             </Code>
                         </Text>
                     </>

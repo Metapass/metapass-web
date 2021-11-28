@@ -99,7 +99,6 @@ function ID() {
                 await txn.wait()
 
                 let tokenIdTxn = await metapass.getLastTokenId()
-                // @ts-ignore
                 let tokenId = ethers.BigNumber.from(tokenIdTxn._hex).toNumber()
                 const opensea = `https://testnets.opensea.io/assets/mumbai/0x05ee02512be6394c72743e6b131ce5b39e875c67/${tokenId}`
 
