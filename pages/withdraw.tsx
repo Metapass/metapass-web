@@ -37,7 +37,6 @@ function Widthdraw() {
     }, [wallet.address])
 
     const withdrawFunds = async () => {
-        console.log(metapass)
         let txn = await metapass.widthdraw()
         await txn.wait()
         await getClaims()

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import Header from './Header'
 import Web3 from 'web3'
 import { walletContext } from '../utils/walletContext'
@@ -14,10 +14,10 @@ const Layout = ({ children }: any) => {
     let windowType: any
 
     let endpoint: any = process.env.NEXT_PUBLIC_ENDPOINT
+    let web3 = new Web3(endpoint)
 
     async function loadAccounts() {
         windowType = window
-        let web3 = new Web3(windowType.web3.currentProvider)
 
         let accounts = await windowType.ethereum.request({
             method: 'eth_requestAccounts',
@@ -32,22 +32,12 @@ const Layout = ({ children }: any) => {
             setWallet({
                 balance: ethBal,
                 address: accounts[0],
-                web3: web3,
             })
         } else {
             toast('Switch to Matic Mumbai Testnet and try again')
         }
     }
 
-    function handleDisconnectClick() {
-        windowType = window
-        setAddress(null)
-        setBalance(null)
-    }
-
-    useEffect(() => {
-        loadAccounts()
-    }, [])
     return (
         <div>
             <Header

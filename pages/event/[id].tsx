@@ -85,9 +85,6 @@ function ID() {
                     'Ticket Number': parseInt(event.occupiedSeats) + 1,
                 },
             }
-
-            console.log(ethers.utils.parseEther(`${event.fee}`)._hex.toString())
-
             try {
                 let txn = await metapass.getTix(
                     event.eventOwner,
@@ -101,24 +98,30 @@ function ID() {
 
                 await txn.wait()
 
-                console.log('Txn completed!', txn)
+                let tokenId = await metapass._tokenIdCounter.current()
+                console.log(tokenId)
+
+                console.log(
+                    'Txn completed!',
+                    ethers.utils.formatEther(txn.value._hex)
+                )
 
                 if (id) {
                     let docRef: any = doc(db, 'events', id.toString())
                     updateDoc(docRef, {
                         occupiedSeats: event.occupiedSeats + 1,
                     }).then((r) => console.log('updated backend'))
-                    let docRef2: any = doc(db, 'users', wallet.address)
-                    updateDoc(docRef2, {
-                        event: event.eventOwner,
-                        image: img,
-                        title: event.title,
-                        fee: event.fee,
-                    })
-                        .then((r) => console.log('updated doc'))
-                        .catch((e) => {
-                            console.log(e)
-                        })
+                    // let docRef2: any = doc(db, 'users', wallet.address)
+                    // updateDoc(docRef2, {
+                    //     event: event.eventOwner,
+                    //     image: img,
+                    //     title: event.title,
+                    //     fee: event.fee,
+                    // })
+                    //     .then((r) => console.log('updated doc'))
+                    //     .catch((e) => {
+                    //         console.log(e)
+                    //     })
                 } else {
                     console.log('no id found')
                 }
