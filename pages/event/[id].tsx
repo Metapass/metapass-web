@@ -100,7 +100,7 @@ function ID() {
 
                 let tokenIdTxn = await metapass.getLastTokenId()
                 let tokenId = ethers.BigNumber.from(tokenIdTxn._hex).toNumber()
-                const opensea = `https://testnets.opensea.io/assets/mumbai/0x05ee02512be6394c72743e6b131ce5b39e875c67/${tokenId}`
+                const opensea = `https://opensea.io/assets/matic/0xd9b5a4efe3f6e43c3b437b495ddb8668a3a3258d/${tokenId}`
 
                 if (id) {
                     let docRef: any = doc(db, 'events', id.toString())
