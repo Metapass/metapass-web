@@ -58,7 +58,7 @@ function ID() {
     }, [id])
 
     const mintTicket = async () => {
-        const contractAddress = '0xCC74F175f169B1407De9268d685dCdC02f175B2C'
+        const contractAddress = '0x05ee02512Be6394C72743e6B131Ce5B39E875C67'
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
@@ -98,35 +98,25 @@ function ID() {
 
                 await txn.wait()
 
-                let tokenId = await metapass._tokenIdCounter.current()
-                console.log(tokenId)
-
-                console.log(
-                    'Txn completed!',
-                    ethers.utils.formatEther(txn.value._hex)
-                )
+                let tokenIdTxn = await metapass.getLastTokenId()
+                let tokenId: any =
+                    ethers.utils.formatEther(tokenIdTxn._hex) * 10 ** 18
+                const opensea = `https://testnets.opensea.io/assets/mumbai/0x05ee02512be6394c72743e6b131ce5b39e875c67/${tokenId}`
 
                 if (id) {
                     let docRef: any = doc(db, 'events', id.toString())
                     updateDoc(docRef, {
                         occupiedSeats: event.occupiedSeats + 1,
                     }).then((r) => console.log('updated backend'))
-                    // let docRef2: any = doc(db, 'users', wallet.address)
-                    // updateDoc(docRef2, {
-                    //     event: event.eventOwner,
-                    //     image: img,
-                    //     title: event.title,
-                    //     fee: event.fee,
-                    // })
-                    //     .then((r) => console.log('updated doc'))
-                    //     .catch((e) => {
-                    //         console.log(e)
-                    //     })
                 } else {
                     console.log('no id found')
                 }
 
                 toast.success('NFT Sent to your wallet! ✨')
+                toast.success('Redirecting to your NFT on opensea')
+                setTimeout(() => {
+                    router.push(opensea)
+                }, 5000)
                 setInTxn(false)
             } catch (e) {
                 console.log(e)

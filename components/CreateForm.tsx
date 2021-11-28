@@ -58,7 +58,7 @@ function CreateForm({
                 />
                 <InputRightAddon>
                     {' '}
-                    <Link href="#">
+                    <Link href="https://res.cloudinary.com/metapass/image/upload/v1638080544/helper_file_yffvrd.png">
                         Ticket image for your event to be minted as NFT. Click
                         here for sample.
                     </Link>{' '}

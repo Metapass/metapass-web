@@ -47,7 +47,7 @@ const MyEvents = () => {
                 if (wallet.address) {
                     windowType = window
                     const contractAddress =
-                        '0xCC74F175f169B1407De9268d685dCdC02f175B2C'
+                        '0x05ee02512Be6394C72743e6B131Ce5B39E875C67'
                     const provider = new ethers.providers.Web3Provider(
                         window.ethereum
                     )
