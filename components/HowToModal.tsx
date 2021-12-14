@@ -21,7 +21,7 @@ function HowToModal({ isOpen, onClose }) {
                         <iframe
                             width="420"
                             height="315"
-                            src="https://www.youtube.com/embed/SkQ2QJkplpw?autoplay=0&mute=1"
+                            src="https://www.youtube.com/embed/gX2a3oUvQMs?autoplay=0&mute=1"
                         ></iframe>
                     </ModalBody>
 
