@@ -1,12 +1,12 @@
-import { Text, Box, Flex, Button, Image } from '@chakra-ui/react'
+import { Image } from '@chakra-ui/react'
 
 const HeroTicket = () => {
     return (
         <Image
-            height="80vh"
-            mr="5rem"
+            height={{ base: '45rem', md: '80vh' }}
+            mr={{ md: '5rem', base: 0 }}
             src="https://res.cloudinary.com/dev-connect/image/upload/v1637080046/img/hero_tick_ggsylf.png"
-            alt="ticket"
+            alt="Hero Ticket"
         />
     )
 }

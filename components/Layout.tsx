@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import Header from './Header'
 import Web3 from 'web3'
 import { walletContext } from '../utils/walletContext'
-import { toast } from 'react-toastify'
+import { Box } from '@chakra-ui/react'
 
 const Layout = ({ children }: any) => {
     // State Variables
@@ -17,21 +17,21 @@ const Layout = ({ children }: any) => {
     let web3 = new Web3(endpoint)
     const polygon = {
         chainId: 137,
-        chainIdHex: "0x89",
-        name: "Polygon (Matic)",
-        shortName: "Polygon",
-        img: "https://raw.githubusercontent.com/sushiswap/icons/master/network/polygon.jpg",
+        chainIdHex: '0x89',
+        name: 'Polygon (Matic)',
+        shortName: 'Polygon',
+        img: 'https://raw.githubusercontent.com/sushiswap/icons/master/network/polygon.jpg',
         enabled: true,
         addData: {
-            chainId: "0x89",
-            chainName: "Polygon Mainnet",
+            chainId: '0x89',
+            chainName: 'Polygon Mainnet',
             nativeCurrency: {
-                name: "MATIC",
-                symbol: "MATIC",
+                name: 'MATIC',
+                symbol: 'MATIC',
                 decimals: 18,
             },
-            rpcUrls: ["https://polygon-rpc.com"],
-            blockExplorerUrls: ["https://polygonscan.com/"],
+            rpcUrls: ['https://polygon-rpc.com'],
+            blockExplorerUrls: ['https://polygonscan.com/'],
         },
     }
 
@@ -57,7 +57,7 @@ const Layout = ({ children }: any) => {
                 await windowType.ethereum.request({
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: '0x89' }],
-                });
+                })
                 loadAccounts()
             } catch (switchError) {
                 // This error code indicates that the chain has not been added to MetaMask.
@@ -66,25 +66,25 @@ const Layout = ({ children }: any) => {
                         await windowType.ethereum.request({
                             method: 'wallet_addEthereumChain',
                             params: [polygon.addData],
-                        });
+                        })
                     } catch (addError) {
-                        console.log('Error Adding chain: ', addError);
+                        console.log('Error Adding chain: ', addError)
                     }
                 }
-                console.log('Error Switching Chains: ', switchError);
+                console.log('Error Switching Chains: ', switchError)
             }
         }
     }
 
     return (
-        <div>
+        <Box minWidth={'max-content'}>
             <Header
                 bal={balance}
                 address={address}
                 handleWalletConnect={loadAccounts}
             />
             {children}
-        </div>
+        </Box>
     )
 }
 
