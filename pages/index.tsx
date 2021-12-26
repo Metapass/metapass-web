@@ -1,10 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import HeroText from '../components/HeroText'
+import HeroText from '../components/herotext'
 import { Text, Flex, Button, Image, Link } from '@chakra-ui/react'
-import HeroTicket from '../components/HeroTicket'
-import { useIsSmallScreen } from '../utils/useIsSmallScreen'
-import { useEffect } from 'react'
+import HeroTicket from '../components/heroticket'
 
 const Home: NextPage = () => {
     return (
