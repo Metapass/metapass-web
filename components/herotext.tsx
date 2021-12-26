@@ -1,4 +1,4 @@
-import { Text, Box, Flex, Button, Image, Heading } from '@chakra-ui/react'
+import { Image, Heading } from '@chakra-ui/react'
 
 const HeroText = () => {
     const star =
@@ -6,13 +6,13 @@ const HeroText = () => {
     return (
         <Heading
             flex="1"
-            ml="4rem"
-            mt="-5rem"
-            fontSize="96px"
-            lineHeight="88px"
+            ml="2rem"
+            mt="5rem"
+            fontSize={{ md: '3.5rem', base: '3.5rem' }}
             alignSelf="center"
             className="hero-text"
             fontFamily="Azonix"
+            mb="0rem"
         >
             <style jsx>{`
                 @font-face {
@@ -23,6 +23,7 @@ const HeroText = () => {
                     font-family: 'Azonix';
                 }
             `}</style>
+            <Image src={star} h={'3rem'} />
             REIMAGINING EVENTS.
         </Heading>
     )

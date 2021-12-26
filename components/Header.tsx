@@ -20,11 +20,17 @@ function Header({ bal, address, handleWalletConnect }: any) {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
-        <Flex rounded="md" direction="row" p={2} justifyContent="space-between">
+        <Flex
+            rounded="md"
+            direction="row"
+            py={{ base: 4, md: 2 }}
+            justifyContent="space-between"
+            mb="3rem"
+        >
             <Link href="/">
-                <Flex ml="2rem" mt="1rem" maxWidth={'md'}>
+                <Flex ml="2rem" mt="1rem">
                     <Image
-                        position="absolute"
+                        height={{ base: '6rem', md: '3rem' }}
                         zIndex="overlay"
                         src="https://res.cloudinary.com/dev-connect/image/upload/v1636452465/svgs/Group_1Logo_1_1_fbbkez.svg"
                         alt="logo"
@@ -62,7 +68,10 @@ function Header({ bal, address, handleWalletConnect }: any) {
                 ) : (
                     <Button
                         m={3}
-                        p={4}
+                        mr={{ base: 8 }}
+                        my={{ base: 2 }}
+                        p={{ base: '2.5rem', md: '1rem' }}
+                        fontSize={{ base: '2rem', md: 'inherit' }}
                         color="white"
                         variant="outline"
                         colorScheme="facebook"
