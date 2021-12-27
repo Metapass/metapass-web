@@ -25,7 +25,7 @@ const Create = () => {
     const [docId, setDocId]: any = useState(null)
     const [txn, setInTxn] = useState(false)
     const { hasCopied, onCopy } = useClipboard(
-        `https://metapass-web-production.up.railway.app/event/${docId}`
+        `https://metapasshq.xyz/event/${docId}`
     )
 
     if (hasCopied) {
