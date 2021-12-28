@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 
 const Home: NextPage = () => {
     useEffect(() => {
-        splitbee.init();
         splitbee.track("Land");
     })
 

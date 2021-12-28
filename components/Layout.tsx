@@ -3,6 +3,8 @@ import Header from './Header'
 import Web3 from 'web3'
 import { walletContext } from '../utils/walletContext'
 import { Box } from '@chakra-ui/react'
+import splitbee from '@splitbee/web'
+import { useEffect } from 'react';
 
 const Layout = ({ children }: any) => {
     // State Variables
@@ -34,6 +36,11 @@ const Layout = ({ children }: any) => {
             blockExplorerUrls: ['https://polygonscan.com/'],
         },
     }
+
+    useEffect(() => {
+        splitbee.init();
+
+    })
 
     async function loadAccounts() {
         windowType = window
