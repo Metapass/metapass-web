@@ -3,8 +3,15 @@ import Head from 'next/head'
 import HeroText from '../components/herotext'
 import { Text, Flex, Button, Image, Link } from '@chakra-ui/react'
 import HeroTicket from '../components/heroticket'
+import splitbee from '@splitbee/web';
+import { useEffect } from 'react';
 
 const Home: NextPage = () => {
+    useEffect(() => {
+        splitbee.init();
+        splitbee.track("Land");
+    })
+
     return (
         <Flex flexDirection="column">
             <Head>
