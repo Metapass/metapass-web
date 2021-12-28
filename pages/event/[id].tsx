@@ -19,6 +19,7 @@ import { ethers } from 'ethers'
 import abi from '../../utils/Metapass.json'
 
 import { toast } from 'react-toastify'
+import splitbee from '@splitbee/web'
 
 declare const window: any
 
@@ -55,6 +56,11 @@ function ID() {
         }
 
         fetchData()
+        useEffect(() => {
+            splitbee.track("Ticket Land", {
+                id: id as string
+            });
+        })
     }, [id])
 
     const mintTicket = async () => {
@@ -90,8 +96,7 @@ function ID() {
                     event.eventOwner,
                     JSON.stringify(metadata),
                     event.manual,
-                    event.title,
-                    {
+                    event.title, {
                         value: await ethers.utils.parseEther(`${event.fee}`),
                     }
                 )
@@ -110,7 +115,9 @@ function ID() {
                 } else {
                     console.log('no id found')
                 }
-
+                splitbee.track("Buy Ticket", {
+                    id: id as string
+                })
                 toast.success('NFT Sent to your wallet! ✨')
                 toast.success('Redirecting to your NFT on opensea')
                 setTimeout(() => {

@@ -7,8 +7,14 @@ import CreateForm from '../components/CreateForm'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { ticketToIPFS } from '../utils/ticketToIPFS'
+import splitbee from '@splitbee/web'
 
 const Create = () => {
+
+    useEffect(() => {
+        splitbee.track("Create");
+    })
+
     const [wallet] = useContext(walletContext)
 
     const [title, setTitle]: any = useState(null)
