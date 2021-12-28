@@ -56,11 +56,9 @@ function ID() {
         }
 
         fetchData()
-        useEffect(() => {
-            splitbee.track("Ticket Land", {
-                id: id as string
-            });
-        })
+        splitbee.track("Ticket Land", {
+            id: id as string
+        });
     }, [id])
 
     const mintTicket = async () => {
