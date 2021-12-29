@@ -25,7 +25,7 @@ declare const window: any
 
 function ID() {
     const [wallet] = useContext(walletContext)
-
+    const [render, setRender] = useState(true)
     const [event, setEvent]: any = useState(null)
     const [mintable, setMintable]: any = useState(false)
     const [inTxn, setInTxn]: any = useState(false)
@@ -49,6 +49,7 @@ function ID() {
                     }
                 } else {
                     console.log("doc data don't exist")
+                    setRender(false)
                 }
             } else {
                 console.log('id not yet initialized')
@@ -56,9 +57,9 @@ function ID() {
         }
 
         fetchData()
-        splitbee.track("Ticket Land", {
-            id: id as string
-        });
+        splitbee.track('Ticket Land', {
+            id: id as string,
+        })
     }, [id])
 
     const mintTicket = async () => {
@@ -94,7 +95,8 @@ function ID() {
                     event.eventOwner,
                     JSON.stringify(metadata),
                     event.manual,
-                    event.title, {
+                    event.title,
+                    {
                         value: await ethers.utils.parseEther(`${event.fee}`),
                     }
                 )
@@ -113,8 +115,8 @@ function ID() {
                 } else {
                     console.log('no id found')
                 }
-                splitbee.track("Buy Ticket", {
-                    id: id as string
+                splitbee.track('Buy Ticket', {
+                    id: id as string,
                 })
                 toast.success('NFT Sent to your wallet! ✨')
                 toast.success('Redirecting to your NFT on opensea')
@@ -132,6 +134,10 @@ function ID() {
         }
     }
 
+    if (!render) {
+        return <div>The requested ID doesn't exist</div>
+    }
+
     return (
         <Flex
             direction="column"
@@ -141,27 +147,28 @@ function ID() {
             <Skeleton isLoaded={event != null ? true : false}>
                 {event ? (
                     <Flex
-                        flexDirection="row"
+                        flexDirection={{ md: 'row', base: 'column' }}
                         justifyContent="flex-start"
                         alignContent="center"
-                        ml={'15%'}
+                        ml={{ md: '15%', base: '10%' }}
                         mt={'5%'}
                     >
+                        <Head>
+                            <title>{event.title + ' // metapass'}</title>
+                        </Head>
                         <Skeleton
                             w="700px"
                             marginRight="20px"
                             isLoaded={event.image != null ? true : false}
                         >
                             <Image
+                                mb={{ base: '2rem' }}
                                 rounded="md"
                                 src={event.image}
                                 w={'600px'}
                                 alt={'img'}
                             />
                         </Skeleton>
-                        <Head>
-                            <title>{event.title + ' // metapass'}</title>
-                        </Head>
                         <Flex
                             flexDirection="column"
                             justifyContent="space-evenly"
@@ -169,11 +176,11 @@ function ID() {
                             flex={1}
                         >
                             <Heading
-                                ml="2rem"
+                                ml={{ md: '2rem', base: 0 }}
                                 mt="-1rem"
                                 w="100%"
                                 mb="5"
-                                fontSize="50px"
+                                fontSize={{ md: '3rem', base: '4rem' }}
                                 lineHeight="89.3%"
                                 alignSelf="center"
                                 className="hero-text"
@@ -195,8 +202,9 @@ function ID() {
                             <Text
                                 fontStyle="normal"
                                 my="2"
-                                mx={4}
-                                fontSize="30px"
+                                mt={{ base: '1.5rem', md: '1rem' }}
+                                mx={{ md: 4, base: 0 }}
+                                fontSize={{ md: '2rem', base: '2.4rem' }}
                                 fontFamily="Azonix"
                                 lineHeight="40px"
                                 fontWeight="normal"
@@ -215,9 +223,9 @@ function ID() {
                                 {event.seats}
                             </Text>
                             <Text
-                                mx={4}
+                                mx={{ md: 4, base: 2 }}
                                 mb={2}
-                                fontSize={'25px'}
+                                fontSize={{ md: '1rem', base: '2rem' }}
                                 // style={{ fontFamily: "'PT Sans', sans-serif" }}
                                 fontFamily="Inter"
                             >
@@ -238,7 +246,7 @@ function ID() {
                                 ml="1rem"
                                 mt="1rem"
                                 mb={2}
-                                fontSize="25px"
+                                fontSize={{ md: '1.5rem', base: '2.5rem' }}
                                 style={{ fontFamily: "'PT Sans', sans-serif" }}
                                 letterSpacing="0.02em"
                                 lineHeight="29px"
@@ -247,13 +255,19 @@ function ID() {
                             >
                                 {event.description}
                             </Text>
-                            <Text mx={4} mt={2} mb={-1} fontSize="22px">
+                            <Text
+                                mx={4}
+                                mt={2}
+                                mb={-1}
+                                fontSize={{ base: '1.5rem', md: '1.5rem' }}
+                            >
                                 $MATIC {event.fee}
                             </Text>
                             <Button
-                                p={4}
-                                width="100%"
+                                p={6}
+                                width={'100%'}
                                 m={'1rem'}
+                                px={{ base: 10 }}
                                 bgImage={
                                     mintable
                                         ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
