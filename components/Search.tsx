@@ -11,15 +11,20 @@ export default function Component() {
     return (
         <AutoComplete rollNavigation>
             <AutoCompleteInput
-                variant="filled"
+                variant="outline"
                 placeholder="Search..."
                 autoFocus
-                maxW="200px"
+                maxW={['100%', '100%', '100%', '600px']}
+                minW={['100%', '100%', '100%', '600px']}
             />
-            <AutoCompleteList maxW="200px">
+            <AutoCompleteList
+                minW={['100%', '100%', '100%', '600px']}
+                maxW={['100%', '100%', '100%', '600px']}
+            >
                 {options.map((option, oid) => (
                     <AutoCompleteItem
-                        maxW="200px"
+                        maxW={['100%', '100%', '100%', '600px']}
+                        minW={['100%', '100%', '100%', '600px']}
                         key={`option-${oid}`}
                         value={option}
                         textTransform="capitalize"
