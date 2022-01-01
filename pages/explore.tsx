@@ -43,7 +43,7 @@ const Explore: NextPage = () => {
                 <Flex
                     alignSelf="center"
                     justifyContent="center"
-                    flexWrap={['nowrap', 'wrap', 'wrap', 'wrap']}
+                    flexWrap="wrap"
                     p={[4, 4, 4, 4]}
                     m={[4, 4, 4, 4]}
                 >
