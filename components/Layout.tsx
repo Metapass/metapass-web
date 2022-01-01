@@ -25,7 +25,8 @@ const Layout = ({ children }: any) => {
 
         if (windowType.ethereum.networkVersion == '80001') {
             setAddress(accounts[0])
-            let bal = await web3.eth.getBalance(accounts[0])
+            // let bal = await web3.eth.getBalance(accounts[0])
+            let bal = '0'
             let ethBal: any = await web3.utils.fromWei(bal, 'ether')
             setBalance(ethBal)
 

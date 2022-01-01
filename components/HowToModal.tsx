@@ -10,10 +10,10 @@ import {
     Button,
 } from '@chakra-ui/react'
 
-function HowToModal({ isOpen, onClose }) {
+function HowToModal({ isOpen, onClose, ...rest }) {
     return (
         <div>
-            <Modal isOpen={isOpen} onClose={onClose} size="xl">
+            <Modal isOpen={isOpen} onClose={onClose} size="xl" {...rest}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>How it works?</ModalHeader>
