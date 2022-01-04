@@ -10,64 +10,85 @@ import {
     Heading,
     Spacer,
     Button,
+    Skeleton,
+    Spinner,
+    Center,
+    SkeletonText,
+    SkeletonCircle,
 } from '@chakra-ui/react'
 
 import { MdHeadset, MdLocationOn, MdEmail } from 'react-icons/md'
 import { BsFillBriefcaseFill } from 'react-icons/bs'
+import { useState } from 'react'
 
-export default function TicketCard({ ticket }) {
-    return (
+export default function TicketCard({ ticket }: any) {
+    return true ? (
         <Box
             m={4}
             w="240.17px"
             h="440.17px"
-            bg={useColorModeValue('white', 'gray.800')}
             shadow="lg"
             borderRadius="14px"
             bgColor="rgba(18, 30, 73, 0.71)"
             border="3.2px solid rgba(18, 30, 73, 0.71)"
             overflow="hidden"
         >
-            <Image
-                w="full"
-                h="123px"
-                fit="cover"
-                objectPosition="center"
-                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-                alt="avatar"
-            />
-
-            <Avatar
-                transform="translateY(-30px)"
-                name="John Doe"
-                size="lg"
-                border="3px solid rgba(18, 30, 73, 0.71)"
-                // borderColor=""
+            {/* {isLoading ? (
+                <Center w="full" h="123px">
+                    <Spinner size="sm" />
+                </Center>
+            ) : null} */}
+            <Skeleton isLoaded={ticket.image ? true : false}>
+                <Image
+                    w="full"
+                    h="123px"
+                    fit="cover"
+                    objectPosition="center"
+                    src={ticket.image}
+                    alt="ticket image"
+                    loading="eager"
+                />
+            </Skeleton>
+            <SkeletonCircle
+                size="45px"
                 mx={2}
-                src="https://bit.ly/dan-abramov"
-            />
+                transform="translateY(-30px)"
+                isLoaded={ticket.avatar ? true : false}
+            >
+                <Avatar
+                    transform="translateY(-10px)"
+                    name="John Doe"
+                    size="md"
+                    border="3px solid rgba(18, 30, 73, 0.71)"
+                    // borderColor=""
+                    mx={2}
+                    src={ticket.avatar}
+                />
+            </SkeletonCircle>
 
             <Box px={4} pb={4}>
-                <Heading
-                    mt={-4}
-                    fontSize="22px"
-                    lineHeight="89.3%"
-                    fontWeight="400"
-                    color="white"
-                    mb={1}
-                    fontFamily="Azonix"
-                >
-                    <style jsx>{`
-                        @font-face {
-                            font-family: 'Azonix';
-                            src: url('/fonts/Azonix.otf');
-                        }
-                        .hero-text {
-                            font-family: 'Azonix';
-                        }
-                    `}</style>
-                    Meetup 2022
-                </Heading>
+                <SkeletonText isLoaded={ticket.title ? true : false}>
+                    <Heading
+                        mt={-4}
+                        fontSize="22px"
+                        lineHeight="89.3%"
+                        fontWeight="400"
+                        color="white"
+                        mb={1}
+                        fontFamily="Azonix"
+                    >
+                        <style jsx>{`
+                            @font-face {
+                                font-family: 'Azonix';
+                                src: url('/fonts/Azonix.otf');
+                            }
+                            .hero-text {
+                                font-family: 'Azonix';
+                            }
+                        `}</style>
+                        {ticket.title}
+                    </Heading>
+                </SkeletonText>
                 <Flex>
                     <Text
                         letterSpacing="0.02em"
@@ -88,7 +109,7 @@ export default function TicketCard({ ticket }) {
                         fontSize="14px"
                         bgGradient="linear(to-br,rgba(224, 91, 73, 1),rgba(236, 59, 123, 1))"
                     >
-                        John{' '}
+                        {ticket.eventOwner}{' '}
                     </Text>
                 </Flex>
                 {/* <Flex
@@ -106,8 +127,7 @@ export default function TicketCard({ ticket }) {
                     color="rgba(255, 255, 255, 0.46)"
                     fontFamily="Product Sans"
                 >
-                    Meet the folks behind the A Company. Unlimited snacks and
-                    drinks included, networking oppportunity. Dance party ..more
+                    {ticket.description}
                 </Text>
                 <Flex
                     justify="center"
@@ -115,6 +135,7 @@ export default function TicketCard({ ticket }) {
                     mt={4}
                     p={2}
                     mx={-6}
+                    transform="translateY(50%)"
                 >
                     <Text
                         fontSize="14px"
@@ -124,7 +145,7 @@ export default function TicketCard({ ticket }) {
                         lineHeight="117.3%"
                         mr={2}
                     >
-                        20/100
+                        {ticket.occupiedSeats}/{ticket.seats}
                     </Text>
                     <Text
                         fontSize="14px"
@@ -142,6 +163,7 @@ export default function TicketCard({ ticket }) {
                         variant="unstyled"
                         bgSize="contain"
                         width="100%"
+                        transform="translateY(50%)"
                         bgImage={
                             true
                                 ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
@@ -160,9 +182,10 @@ export default function TicketCard({ ticket }) {
                             bgRepeat: 'no-repeat',
                             transform: 'scale(1.1)',
                             outline: 'none',
-                            bgImage: true
-                                ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
-                                : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
+                            bgImage:
+                                ticket.seats - ticket.occupiedSeats > 0
+                                    ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
+                                    : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
                         }}
                         _active={{
                             width: '100%',
@@ -172,13 +195,16 @@ export default function TicketCard({ ticket }) {
                             bgRepeat: 'no-repeat',
                             transform: 'scale(1.1)',
                             outline: 'none',
-                            bgImage: true
-                                ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
-                                : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
+                            bgImage:
+                                ticket.seats - ticket.occupiedSeats > 0
+                                    ? 'https://res.cloudinary.com/dev-connect/image/upload/v1637231444/img/buy_now_b2t26i.svg'
+                                    : 'https://res.cloudinary.com/dev-connect/image/upload/v1637233007/img/sold_out_we8fxd.svg',
                         }}
                     ></Button>
                 </Flex>
             </Box>
         </Box>
+    ) : (
+        <> </>
     )
 }
