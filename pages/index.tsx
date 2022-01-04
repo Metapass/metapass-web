@@ -3,6 +3,7 @@ import Head from 'next/head'
 import HeroText from '../components/herotext'
 import { Text, Box, Flex, Button, Image, Link } from '@chakra-ui/react'
 import HeroTicket from '../components/heroticket'
+import Footer from '../components/Footer'
 
 const Home: NextPage = () => {
     return (
@@ -40,6 +41,7 @@ const Home: NextPage = () => {
 
                 <HeroTicket />
                 <Text
+                    mt={5}
                     w="646.25px"
                     h="70.99px"
                     position="absolute"
@@ -58,6 +60,7 @@ const Home: NextPage = () => {
             </Flex>
             <Link href="/create">
                 <Button
+                    variant={'unstyled'}
                     bgRepeat="no-repeat"
                     w="217.89px"
                     bgColor="transparent"
@@ -85,6 +88,7 @@ const Home: NextPage = () => {
                     alt="mouse"
                 />{' '}
             </Flex>
+            <Footer />
         </Flex>
     )
 }
