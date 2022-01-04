@@ -14,8 +14,9 @@ const Layout = ({ children }: any) => {
     let windowType: any
 
     let endpoint: any = process.env.NEXT_PUBLIC_ENDPOINT
-    let web3 = new Web3(endpoint)
 
+    // let web3 = new Web3(endpoint)
+    const web3 = new Web3(endpoint || Web3.givenProvider)
     async function loadAccounts() {
         windowType = window
 
@@ -25,6 +26,7 @@ const Layout = ({ children }: any) => {
 
         if (windowType.ethereum.networkVersion == '80001') {
             setAddress(accounts[0])
+            // let bal = await web3.eth.getBalance(accounts[0])
             let bal = await web3.eth.getBalance(accounts[0])
             let ethBal: any = await web3.utils.fromWei(bal, 'ether')
             setBalance(ethBal)
