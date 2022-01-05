@@ -6,8 +6,6 @@ import {
     getFirestore,
     arrayUnion,
     getDoc,
-    getDocs,
-    getDocsFromCache,
     updateDoc,
 } from 'firebase/firestore'
 
@@ -26,15 +24,4 @@ const firebaseConfig = {
 
 const db = getFirestore()
 
-export {
-    firebase,
-    doc,
-    addDoc,
-    collection,
-    db,
-    arrayUnion,
-    getDocs,
-    getDocsFromCache,
-    getDoc,
-    updateDoc,
-}
+export { firebase, doc, addDoc, collection, db, arrayUnion, getDoc, updateDoc }

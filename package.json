@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.10",
-    "@choc-ui/chakra-autocomplete": "^4.13.0",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@fontsource/inter": "^4.5.0",
