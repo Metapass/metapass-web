@@ -54,6 +54,10 @@ function Header({ bal, address, handleWalletConnect }: any) {
                         </Box>
 
                         <Box m={2} p={2}>
+                            <Link href="/explore">Explore</Link>
+                        </Box>
+
+                        <Box m={2} p={2}>
                             <Text onClick={onOpen}>How it works?</Text>
                         </Box>
                         <Button variant="outline" p={4} rounded={'md'} m={2}>

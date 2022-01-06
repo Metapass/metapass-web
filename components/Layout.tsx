@@ -4,7 +4,7 @@ import Web3 from 'web3'
 import { walletContext } from '../utils/walletContext'
 import { Box } from '@chakra-ui/react'
 import splitbee from '@splitbee/web'
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 const Layout = ({ children }: any) => {
     // State Variables
@@ -38,8 +38,7 @@ const Layout = ({ children }: any) => {
     }
 
     useEffect(() => {
-        splitbee.init();
-
+        splitbee.init()
     })
 
     async function loadAccounts() {
@@ -65,7 +64,6 @@ const Layout = ({ children }: any) => {
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: '0x89' }],
                 })
-                loadAccounts()
             } catch (switchError) {
                 // This error code indicates that the chain has not been added to MetaMask.
                 if (switchError.code === 4902) {
