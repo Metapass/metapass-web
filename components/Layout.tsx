@@ -48,6 +48,21 @@ const Layout = ({ children }: any) => {
             //  Enable session (triggers QR Code modal)
             try {
                 await provider.enable()
+                let accounts = await provider.request({
+                    method: 'eth_requestAccounts',
+                })
+                setAddress(accounts[0])
+                let bal = await web3.eth.getBalance(accounts[0])
+                let ethBal: any = await web3.utils.fromWei(bal, 'ether')
+                setBalance(ethBal)
+                setWallet({
+                    balance: ethBal,
+                    address: accounts[0],
+                })
+                await provider.on('disconnect', () => {
+                    console.log('disconnected')
+                })
+                await provider.close()
             } catch (e) {
                 console.log(e)
             }
@@ -72,33 +87,38 @@ const Layout = ({ children }: any) => {
         }
     }
 
-    useEffect(() => {
-        provider.on('chainChanged', async (chainId: number) => {
-            setChainId(chainId)
-        })
+    // useEffect(() => {
+    //     // provider.on('chainChanged', async (chainId: number) => {
+    //     //     setChainId(chainId)
+    //     // })
 
-        async function checkChainId() {
-            if (chainId === 80001) {
-                await provider.enable()
-                provider.on('accountsChanged', async (accounts: string[]) => {
-                    setAddress(accounts[0])
-                    let bal = web3.eth.getBalance(accounts[0])
-                    let ethBal: any = await web3.utils.fromWei(
-                        bal as any,
-                        'ether'
-                    )
-                    setBalance(ethBal)
-                    setWallet({
-                        balance: ethBal,
-                        address: accounts[0],
-                    })
-                })
-            } else {
-                toast('Switch to Matic Mumbai Testnet and try again')
-            }
-        }
-        checkChainId()
-    }, [provider, web3]) // eslint-disable-line
+    //     async function checkChainId() {
+    //         if (chainId === 80001) {
+    //             try {
+    //                 await provider.enable()
+    //             } catch (e) {
+    //                 await provider.close()
+    //                 console.log(e)
+    //             }
+    //             provider.on('accountsChanged', async (accounts: string[]) => {
+    //                 setAddress(accounts[0])
+    //                 let bal = web3.eth.getBalance(accounts[0])
+    //                 let ethBal: any = await web3.utils.fromWei(
+    //                     bal as any,
+    //                     'ether'
+    //                 )
+    //                 setBalance(ethBal)
+    //                 setWallet({
+    //                     balance: ethBal,
+    //                     address: accounts[0],
+    //                 })
+    //             })
+    //         } else {
+    //             toast('Switch to Matic Mumbai Testnet and try again')
+    //         }
+    //     }
+    //     checkChainId()
+    // }, [provider, web3]) // eslint-disable-line
 
     return (
         <div>
