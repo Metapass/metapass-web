@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Header from './Header'
 import Web3 from 'web3'
 import { walletContext } from '../utils/walletContext'
@@ -10,7 +10,7 @@ const Layout = ({ children }: any) => {
     // State Variables
     const [address, setAddress] = useState(null)
     const [balance, setBalance] = useState(null)
-
+    const [chainId, setChainId] = useState(null)
     const [wallet, setWallet] = useContext(walletContext)
 
     let windowType: any
@@ -25,7 +25,8 @@ const Layout = ({ children }: any) => {
 
     async function loadAccounts() {
         windowType = window
-        if (currentDevice.isDesktop()) {
+
+        if (!currentDevice.isDesktop()) {
             let accounts = await windowType.ethereum.request({
                 method: 'eth_requestAccounts',
             })
@@ -45,31 +46,59 @@ const Layout = ({ children }: any) => {
             }
         } else {
             //  Enable session (triggers QR Code modal)
-            provider.on('chainChanged', async (chainId: number) => {
-                if (chainId === 80001) {
-                    await provider.enable()
-                    provider.on(
-                        'accountsChanged',
-                        async (accounts: string[]) => {
-                            setAddress(accounts[0])
-                            let bal = web3.eth.getBalance(accounts[0])
-                            let ethBal: any = await web3.utils.fromWei(
-                                bal as any,
-                                'ether'
-                            )
-                            setBalance(ethBal)
-                            setWallet({
-                                balance: ethBal,
-                                address: accounts[0],
-                            })
-                        }
-                    )
-                } else {
-                    toast('Switch to Matic Mumbai Testnet and try again')
-                }
-            })
+            try {
+                await provider.enable()
+            } catch (e) {
+                console.log(e)
+            }
+            // if (chainId === 80001) {
+            //     await provider.enable()
+            //     provider.on('accountsChanged', async (accounts: string[]) => {
+            //         setAddress(accounts[0])
+            //         let bal = web3.eth.getBalance(accounts[0])
+            //         let ethBal: any = await web3.utils.fromWei(
+            //             bal as any,
+            //             'ether'
+            //         )
+            //         setBalance(ethBal)
+            //         setWallet({
+            //             balance: ethBal,
+            //             address: accounts[0],
+            //         })
+            //     })
+            // } else {
+            //     toast('Switch to Matic Mumbai Testnet and try again')
+            // }
         }
     }
+
+    useEffect(() => {
+        provider.on('chainChanged', async (chainId: number) => {
+            setChainId(chainId)
+        })
+
+        async function checkChainId() {
+            if (chainId === 80001) {
+                await provider.enable()
+                provider.on('accountsChanged', async (accounts: string[]) => {
+                    setAddress(accounts[0])
+                    let bal = web3.eth.getBalance(accounts[0])
+                    let ethBal: any = await web3.utils.fromWei(
+                        bal as any,
+                        'ether'
+                    )
+                    setBalance(ethBal)
+                    setWallet({
+                        balance: ethBal,
+                        address: accounts[0],
+                    })
+                })
+            } else {
+                toast('Switch to Matic Mumbai Testnet and try again')
+            }
+        }
+        checkChainId()
+    }, [provider, web3]) // eslint-disable-line
 
     return (
         <div>
