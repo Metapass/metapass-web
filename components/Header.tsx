@@ -1,7 +1,8 @@
 import { Flex, Button, Box, Image, useDisclosure, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import HowToModal from './HowToModal'
-
+import WalletConnectProvider from '@walletconnect/web3-provider'
+// import useMobileDetect from '../utils/useMobileDetect'
 function Header({ bal, address, handleWalletConnect }: any) {
     let addressDisplay
     if (address) {

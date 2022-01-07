@@ -3,6 +3,8 @@ import Header from './Header'
 import Web3 from 'web3'
 import { walletContext } from '../utils/walletContext'
 import { toast } from 'react-toastify'
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import useMobileDetect from '../utils/useMobileDetect'
 
 const Layout = ({ children }: any) => {
     // State Variables
@@ -12,29 +14,60 @@ const Layout = ({ children }: any) => {
     const [wallet, setWallet] = useContext(walletContext)
 
     let windowType: any
-
+    const currentDevice = useMobileDetect()
     let endpoint: any = process.env.NEXT_PUBLIC_ENDPOINT
-    let web3 = new Web3(endpoint)
+    const provider = new WalletConnectProvider({
+        rpc: {
+            1: endpoint,
+        },
+    })
+    let web3 = new Web3(currentDevice.isDesktop() ? endpoint : provider)
 
     async function loadAccounts() {
         windowType = window
-
-        let accounts = await windowType.ethereum.request({
-            method: 'eth_requestAccounts',
-        })
-
-        if (windowType.ethereum.networkVersion == '80001') {
-            setAddress(accounts[0])
-            let bal = await web3.eth.getBalance(accounts[0])
-            let ethBal: any = await web3.utils.fromWei(bal, 'ether')
-            setBalance(ethBal)
-
-            setWallet({
-                balance: ethBal,
-                address: accounts[0],
+        if (currentDevice.isDesktop()) {
+            let accounts = await windowType.ethereum.request({
+                method: 'eth_requestAccounts',
             })
+
+            if (windowType.ethereum.networkVersion == '80001') {
+                setAddress(accounts[0])
+                let bal = await web3.eth.getBalance(accounts[0])
+                let ethBal: any = await web3.utils.fromWei(bal, 'ether')
+                setBalance(ethBal)
+
+                setWallet({
+                    balance: ethBal,
+                    address: accounts[0],
+                })
+            } else {
+                toast('Switch to Matic Mumbai Testnet and try again')
+            }
         } else {
-            toast('Switch to Matic Mumbai Testnet and try again')
+            //  Enable session (triggers QR Code modal)
+            provider.on('chainChanged', async (chainId: number) => {
+                if (chainId === 80001) {
+                    await provider.enable()
+                    provider.on(
+                        'accountsChanged',
+                        async (accounts: string[]) => {
+                            setAddress(accounts[0])
+                            let bal = web3.eth.getBalance(accounts[0])
+                            let ethBal: any = await web3.utils.fromWei(
+                                bal as any,
+                                'ether'
+                            )
+                            setBalance(ethBal)
+                            setWallet({
+                                balance: ethBal,
+                                address: accounts[0],
+                            })
+                        }
+                    )
+                } else {
+                    toast('Switch to Matic Mumbai Testnet and try again')
+                }
+            })
         }
     }
 
