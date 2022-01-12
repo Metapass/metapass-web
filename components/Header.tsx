@@ -7,7 +7,6 @@ import {
     Stack,
     Collapse,
     Icon,
-    Link,
     Image,
     Popover,
     PopoverTrigger,
@@ -22,6 +21,8 @@ import {
     ChevronDownIcon,
     ChevronRightIcon,
 } from '@chakra-ui/icons'
+
+import Link from 'next/link'
 
 export default function WithSubnavigation({
     bal,
