@@ -21,6 +21,8 @@ import abi from '../../utils/Metapass.json'
 import { toast } from 'react-toastify'
 import splitbee from '@splitbee/web'
 
+import { NextSeo } from 'next-seo'
+
 declare const window: any
 
 function ID() {
@@ -144,6 +146,10 @@ function ID() {
             justifyContent={'center'}
             alignItems="flex-start"
         >
+            <NextSeo
+                title={event.title + ` | metapass`}
+                description={event.description}
+            />
             <Skeleton isLoaded={event != null ? true : false}>
                 {event ? (
                     <Flex

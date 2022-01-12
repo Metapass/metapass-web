@@ -150,18 +150,19 @@ const DesktopNav = () => {
                 <Box key={navItem.label}>
                     <Popover trigger={'hover'} placement={'bottom-start'}>
                         <PopoverTrigger>
-                            <Link
-                                p={2}
-                                href={navItem.href ?? '#'}
-                                fontSize={'sm'}
-                                fontWeight={500}
-                                color={linkColor}
-                                _hover={{
-                                    textDecoration: 'none',
-                                    color: linkHoverColor,
-                                }}
-                            >
-                                {navItem.label}
+                            <Link href={navItem.href ?? '#'}>
+                                <Text
+                                    p={2}
+                                    fontSize={'sm'}
+                                    fontWeight={500}
+                                    color={linkColor}
+                                    _hover={{
+                                        textDecoration: 'none',
+                                        color: linkHoverColor,
+                                    }}
+                                >
+                                    {navItem.label}
+                                </Text>
                             </Link>
                         </PopoverTrigger>
 
@@ -193,8 +194,7 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
     return (
-        <Link
-            href={href}
+        <Text
             role={'group'}
             display={'block'}
             p={2}
@@ -232,7 +232,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
                     />
                 </Flex>
             </Stack>
-        </Link>
+        </Text>
     )
 }
 
@@ -312,9 +312,9 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
                 >
                     {children &&
                         children.map((child) => (
-                            <Link key={child.label} py={2} href={child.href}>
-                                {child.label}
-                            </Link>
+                            <Text key={child.label} py={2}>
+                                <Link href={child.href}>{child.label}</Link>
+                            </Text>
                         ))}
                 </Stack>
             </Collapse>
