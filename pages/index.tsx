@@ -3,16 +3,21 @@ import Head from 'next/head'
 import HeroText from '../components/herotext'
 import { Text, Flex, Button, Image, Link } from '@chakra-ui/react'
 import HeroTicket from '../components/heroticket'
-import splitbee from '@splitbee/web';
-import { useEffect } from 'react';
+import splitbee from '@splitbee/web'
+import { useEffect } from 'react'
+import { NextSeo } from 'next-seo'
 
 const Home: NextPage = () => {
     useEffect(() => {
-        splitbee.track("Land");
+        splitbee.track('Land')
     })
 
     return (
         <Flex flexDirection="column">
+            <NextSeo
+                title="Metapass"
+                description="an on-chain ticketing platform on Polygon."
+            />
             <Head>
                 <title>MetaPass</title>
 
