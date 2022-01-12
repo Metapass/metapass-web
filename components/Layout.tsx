@@ -48,7 +48,7 @@ const Layout = ({ children }: any) => {
             method: 'eth_requestAccounts',
         })
 
-        if (windowType.ethereum.chainId == '0x89') {
+        if (windowType.ethereum.chainId == process.env.NEXT_PUBLIC_CHAIN_ID) {
             setAddress(accounts[0])
             let bal = await web3.eth.getBalance(accounts[0])
             let ethBal: any = await web3.utils.fromWei(bal, 'ether')
@@ -62,7 +62,7 @@ const Layout = ({ children }: any) => {
             try {
                 await windowType.ethereum.request({
                     method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0x89' }],
+                    params: [{ chainId: process.env.NEXT_PUBLIC_CHAIN_ID }],
                 })
             } catch (switchError) {
                 // This error code indicates that the chain has not been added to MetaMask.

@@ -10,6 +10,7 @@
     "test": "npm run build && npm run start"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.6.10",
     "@choc-ui/chakra-autocomplete": "^4.13.0",
     "@emotion/react": "^11.5.0",

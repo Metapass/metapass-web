@@ -34,20 +34,26 @@ function CreateForm({
     }
     return (
         <>
-            <Heading m={2}>Create an event</Heading>
+            <Heading m={2} fontSize={{ md: '3xl', base: '6xl' }}>
+                Create an event
+            </Heading>
             <Input
                 m={2}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder={'Title'}
+                variant="flushed"
+                size={'6xl'}
             />
             <Textarea
                 m={2}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder={'Description'}
+                variant="flushed"
             />
             <Input
                 onChange={(e) => setSeats(e.target.value)}
                 placeholder={'Seats'}
+                variant="flushed"
             />
             <InputGroup m={2}>
                 <Input
@@ -55,6 +61,7 @@ function CreateForm({
                     p={1}
                     accept="image/*"
                     onChange={(e) => setFile(e.target.files[0])}
+                    variant="flushed"
                 />
                 <InputRightAddon>
                     {' '}
@@ -79,6 +86,8 @@ function CreateForm({
                     <Input
                         onChange={(e) => setFee(e.target.value)}
                         placeholder={'Amount'}
+                        variant="flushed"
+                        type="number"
                     />
                     <InputRightAddon>MATIC</InputRightAddon>
                 </InputGroup>
@@ -88,12 +97,15 @@ function CreateForm({
                 onChange={({ target }) => {
                     setDate(new Date(target.value))
                 }}
+                variant="flushed"
+                placeholder="Date"
             />
             <hr color="red" />
             <Input
                 m={2}
                 onChange={(e) => encryptLink(e.target.value)}
-                placeholder="link to join events for attendees"
+                placeholder="Link for attendees to join event"
+                variant="flushed"
             />
             <Button
                 m={2}
