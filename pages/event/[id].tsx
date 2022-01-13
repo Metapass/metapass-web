@@ -21,8 +21,6 @@ import abi from '../../utils/Metapass.json'
 import { toast } from 'react-toastify'
 import splitbee from '@splitbee/web'
 
-import { NextSeo } from 'next-seo'
-
 declare const window: any
 
 function ID() {
@@ -146,10 +144,6 @@ function ID() {
             justifyContent={'center'}
             alignItems="flex-start"
         >
-            <NextSeo
-                title={`event on metapass`}
-                description={`Click on the link to view this event on Metapass. Your web3 ticket awaits you.`}
-            />
             <Skeleton isLoaded={event != null ? true : false}>
                 {event ? (
                     <Flex
@@ -161,6 +155,10 @@ function ID() {
                     >
                         <Head>
                             <title>{event.title + ' // metapass'}</title>
+                            <meta
+                                name="description"
+                                content="visit the link to buy tickets for the event. your NFT ticket waits for you."
+                            />
                         </Head>
                         <Skeleton
                             w="700px"

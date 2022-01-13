@@ -5,7 +5,6 @@ import { Text, Flex, Button, Image, Link } from '@chakra-ui/react'
 import HeroTicket from '../components/heroticket'
 import splitbee from '@splitbee/web'
 import { useEffect } from 'react'
-import { NextSeo } from 'next-seo'
 
 const Home: NextPage = () => {
     useEffect(() => {
@@ -14,13 +13,16 @@ const Home: NextPage = () => {
 
     return (
         <Flex flexDirection="column">
-            <NextSeo
-                title="Metapass"
-                description="an on-chain ticketing platform on Polygon."
-            />
             <Head>
                 <title>MetaPass</title>
-
+                <meta
+                    name="description"
+                    content="on-chain ticketing system using web3 and NFTs"
+                />
+                <meta
+                    name="keywords"
+                    content="onchain ticketing, metapass tickets, metapass crypto, metapass nft"
+                />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
                     rel="preconnect"
