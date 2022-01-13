@@ -5,9 +5,11 @@ import { walletContext } from '../utils/walletContext'
 import { toast } from 'react-toastify'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import useMobileDetect from '../utils/useMobileDetect'
+import { useMoralis } from 'react-moralis'
 
 const Layout = ({ children }: any) => {
     // State Variables
+    const Moralis = useMoralis()
     const [address, setAddress] = useState(null)
     const [balance, setBalance] = useState(null)
     const [chainId, setChainId] = useState(null)
@@ -16,17 +18,19 @@ const Layout = ({ children }: any) => {
     let windowType: any
     const currentDevice = useMobileDetect()
     let endpoint: any = process.env.NEXT_PUBLIC_ENDPOINT
-    const provider = new WalletConnectProvider({
-        rpc: {
-            1: endpoint,
-        },
-    })
-    let web3 = new Web3(currentDevice.isDesktop() ? endpoint : provider)
+    // const provider = new WalletConnectProvider({
+    //     rpc: {
+    //         1: endpoint,
+    //     },
+    // })
+    let web3 = new Web3(endpoint)
 
     async function loadAccounts() {
+        console.log('1')
         windowType = window
 
         if (!currentDevice.isDesktop()) {
+            console.log('2')
             let accounts = await windowType.ethereum.request({
                 method: 'eth_requestAccounts',
             })
@@ -45,27 +49,16 @@ const Layout = ({ children }: any) => {
                 toast('Switch to Matic Mumbai Testnet and try again')
             }
         } else {
-            //  Enable session (triggers QR Code modal)
             try {
-                await provider.enable()
-                let accounts = await provider.request({
-                    method: 'eth_requestAccounts',
+                const user = await Moralis.authenticate({
+                    provider: 'walletconnect',
                 })
-                setAddress(accounts[0])
-                let bal = await web3.eth.getBalance(accounts[0])
-                let ethBal: any = await web3.utils.fromWei(bal, 'ether')
-                setBalance(ethBal)
-                setWallet({
-                    balance: ethBal,
-                    address: accounts[0],
-                })
-                await provider.on('disconnect', () => {
-                    console.log('disconnected')
-                })
-                await provider.close()
-            } catch (e) {
-                console.log(e)
+                console.log(user, 'user')
+            } catch (error) {
+                console.log(error)
             }
+            //  Enable session (triggers QR Code modal)
+
             // if (chainId === 80001) {
             //     await provider.enable()
             //     provider.on('accountsChanged', async (accounts: string[]) => {
