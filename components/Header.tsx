@@ -89,7 +89,7 @@ export default function WithSubnavigation({
                 </Flex>
 
                 <Stack
-                    flex={{ base: 1, md: 0 }}
+                    flex={1}
                     justify={'flex-end'}
                     direction={'row'}
                     alignItems="center"
@@ -129,11 +129,7 @@ export default function WithSubnavigation({
             </Flex>
 
             <Collapse in={isOpen} animateOpacity>
-                <MobileNav
-                    addressDisplay={addressDisplay}
-                    bal={bal}
-                    handleWalletConnect={handleWalletConnect}
-                />
+                <MobileNav />
             </Collapse>
         </Box>
     )
@@ -150,20 +146,20 @@ const DesktopNav = () => {
                 <Box key={navItem.label}>
                     <Popover trigger={'hover'} placement={'bottom-start'}>
                         <PopoverTrigger>
-                            <Link href={navItem.href ?? '#'}>
-                                <Text
-                                    p={2}
-                                    fontSize={'sm'}
-                                    fontWeight={500}
-                                    color={linkColor}
-                                    _hover={{
-                                        textDecoration: 'none',
-                                        color: linkHoverColor,
-                                    }}
-                                >
+                            <Text
+                                p={2}
+                                fontSize={'md'}
+                                fontWeight={500}
+                                color={linkColor}
+                                _hover={{
+                                    textDecoration: 'none',
+                                    color: linkHoverColor,
+                                }}
+                            >
+                                <Link href={navItem.href ?? '#'}>
                                     {navItem.label}
-                                </Text>
-                            </Link>
+                                </Link>
+                            </Text>
                         </PopoverTrigger>
 
                         {navItem.children && (
@@ -192,7 +188,7 @@ const DesktopNav = () => {
     )
 }
 
-const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
+const DesktopSubNav = ({ label, subLabel }: NavItem) => {
     return (
         <Text
             role={'group'}
@@ -236,28 +232,9 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
     )
 }
 
-const MobileNav = ({ addressDisplay, handleWalletConnect }: any) => {
+const MobileNav = () => {
     return (
-        <Stack p={4} display={{ md: 'none' }}>
-            {addressDisplay ? (
-                <>
-                    <Button variant="outline" p={4} m={2} rounded={'md'}>
-                        Wallet is Connected
-                    </Button>
-                </>
-            ) : (
-                <Button
-                    display={{ base: 'none', md: 'inline-flex' }}
-                    fontSize={'md'}
-                    fontWeight={600}
-                    color={'white'}
-                    onClick={handleWalletConnect}
-                    variant="outline"
-                >
-                    Connect Wallet
-                </Button>
-            )}
-
+        <Stack p={4} display={{ md: 'none' }} direction={'column'}>
             {NAV_ITEMS.map((navItem) => (
                 <MobileNavItem key={navItem.label} {...navItem} />
             ))}
@@ -272,20 +249,20 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         <Stack spacing={4} onClick={children && onToggle}>
             <Flex
                 py={2}
-                as={Link}
-                href={href ?? '#'}
                 justify={'space-between'}
                 align={'center'}
                 _hover={{
                     textDecoration: 'none',
                 }}
             >
-                <Text
-                    fontWeight={600}
-                    color={useColorModeValue('gray.600', 'gray.200')}
-                >
-                    {label}
-                </Text>
+                <Link href={href}>
+                    <Text
+                        fontWeight={600}
+                        color={useColorModeValue('gray.600', 'gray.200')}
+                    >
+                        {label}
+                    </Text>
+                </Link>
                 {children && (
                     <Icon
                         as={ChevronDownIcon}

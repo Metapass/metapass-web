@@ -57,9 +57,9 @@ const Home: NextPage = () => {
                         audience. Tickets are distributed as ERC721 NFT-tokens
                         after it's bought with $MATIC.
                     </Text>
-                    <Link href="/create">
+                    <Link href="/explore">
                         <Button
-                            mt={{ base: 4 }}
+                            mt={{ base: 10 }}
                             mb={{ base: 10 }}
                             bgRepeat="no-repeat"
                             w="217.89px"
