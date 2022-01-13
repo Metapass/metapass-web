@@ -147,8 +147,8 @@ function ID() {
             alignItems="flex-start"
         >
             <NextSeo
-                title={event.title + ` | metapass`}
-                description={event.description}
+                title={`event on metapass`}
+                description={`Click on the link to view this event on Metapass. Your web3 ticket awaits you.`}
             />
             <Skeleton isLoaded={event != null ? true : false}>
                 {event ? (
