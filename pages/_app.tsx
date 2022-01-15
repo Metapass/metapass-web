@@ -5,18 +5,25 @@ import '@fontsource/inter'
 import Layout from '../components/Layout'
 import Wallet from '../utils/walletContext'
 
+import { MoralisProvider } from 'react-moralis'
+
 import 'react-toastify/dist/ReactToastify.min.css'
 import { ToastContainer } from 'react-toastify'
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <ChakraProvider theme={theme}>
-            <Wallet>
-                <Layout>
-                    <ToastContainer />
-                    <Component {...pageProps} />
-                </Layout>
-            </Wallet>
+            <MoralisProvider
+                serverUrl={process.env.MORALIS_SERVER_URL}
+                appId={process.env.MORALIS_APP_ID}
+            >
+                <Wallet>
+                    <Layout>
+                        <ToastContainer />
+                        <Component {...pageProps} />
+                    </Layout>
+                </Wallet>
+            </MoralisProvider>
         </ChakraProvider>
     )
 }

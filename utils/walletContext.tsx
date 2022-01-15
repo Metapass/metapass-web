@@ -7,9 +7,12 @@ function Wallet({ children }: any) {
         balance: null,
         address: null,
     })
+    const [provider, setProvider] = useState(null)
 
     return (
-        <walletContext.Provider value={[wallet, setWallet]}>
+        <walletContext.Provider
+            value={[wallet, setWallet, provider, setProvider]}
+        >
             {children}
         </walletContext.Provider>
     )
