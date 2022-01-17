@@ -30,7 +30,8 @@ const MyEvents = () => {
             if (typeof window !== 'undefined') {
                 if (wallet.address) {
                     windowType = window
-                    const contractAddress = process.env.CONTRACT_ADDRESS
+                    const contractAddress =
+                        process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
                     const provider = new ethers.providers.Web3Provider(
                         window.ethereum
                     )
