@@ -63,7 +63,7 @@ function ID() {
     }, [id])
 
     const mintTicket = async () => {
-        const contractAddress = '0xD9b5a4Efe3f6e43C3b437B495dDB8668A3a3258d'
+        const contractAddress = process.env.CONTRACT_ADDRESS
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
