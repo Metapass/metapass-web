@@ -10,9 +10,8 @@ import { ticketToIPFS } from '../utils/ticketToIPFS'
 import splitbee from '@splitbee/web'
 
 const Create = () => {
-
     useEffect(() => {
-        splitbee.track("Create");
+        splitbee.track('Create')
     })
 
     const [wallet] = useContext(walletContext)
@@ -31,7 +30,9 @@ const Create = () => {
     const [docId, setDocId]: any = useState(null)
     const [txn, setInTxn] = useState(false)
     const { hasCopied, onCopy } = useClipboard(
-        `https://metapasshq.xyz/event/${docId}`
+        process.env.NEXT_PUBLIC_CHAIN_ID == '0x13881'
+            ? `https://testnet.metapasshq.xyz/event/${docId}`
+            : `https://metapasshq.xyz/event/${docId}`
     )
 
     if (hasCopied) {
@@ -99,7 +100,7 @@ const Create = () => {
                             you've successfully created an event! Share this
                             link for booking{' '}
                             <Code onClick={onCopy}>
-                                {`https://metapass.ml/event/${docId}`}
+                                {`https://metapasshq.xyz/event/${docId}`}
                             </Code>
                         </Text>
                     </>
